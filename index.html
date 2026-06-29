@@ -326,45 +326,128 @@
 
         <!-- Hero Banner -->
         <section class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-            <div class="relative h-[60vh] overflow-hidden">
-                <!-- Fallback background (renders first = lowest layer) -->
-                <div class="absolute inset-0 bg-stone-800"></div>
-                <!-- Mobile Image -->
-                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-[2500ms] hover:scale-105 md:hidden"
-                    style="background-image: url('./farm_hero_mobile.webp');">
-                </div>
-                <!-- Desktop Image -->
-                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-[2500ms] hover:scale-105 hidden md:block"
-                    style="background-image: url('./farm_hero_web.webp');">
-                </div>
-                <div class="absolute inset-0 hero-gradient"></div>
-                <div class="absolute bottom-16 md:bottom-[60px] left-[20px] md:left-[60px] text-on-primary max-w-2xl">
-                    <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] mb-3 opacity-80">2026 여름 농할 특가전</p>
-                    <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-tight mb-6">
-                        신선한 자연,<br />건강한 밥상.
-                    </h2>
-                    <p class="font-body-lg opacity-80 mb-8 max-w-md hidden md:block">
-                        농할 30%에 추가 5% 이중 할인까지. 산지 직송 신선 식품을 온누리마켓에서 지금 바로 만나보세요.
-                    </p>
-                    <div class="flex items-center gap-4">
-                        <button
-                            class="bg-on-primary text-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all hover:bg-primary hover:text-on-primary hover:border hover:border-on-primary active:scale-95">
-                            지금 쇼핑하기
-                        </button>
-                        <button
-                            class="border border-on-primary text-on-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all hover:bg-on-primary hover:text-primary active:scale-95">
-                            농할 혜택 보기
-                        </button>
+            <div class="relative h-[60vh] overflow-hidden" id="hero-carousel">
+                <!-- Slides wrapper -->
+                <div class="flex h-full transition-transform duration-700 ease-in-out" id="hero-slides" style="width:300%">
+
+                    <!-- Slide 1: 이미지 배너 -->
+                    <div class="relative h-full flex-shrink-0" style="width:33.3333%">
+                        <div class="absolute inset-0 bg-stone-800"></div>
+                        <div class="absolute inset-0 bg-cover bg-center md:hidden" style="background-image: url('./farm_hero_mobile.webp');"></div>
+                        <div class="absolute inset-0 bg-cover bg-center hidden md:block" style="background-image: url('./farm_hero_web.webp');"></div>
+                        <div class="absolute inset-0 hero-gradient"></div>
+                        <div class="absolute bottom-16 md:bottom-[60px] left-[20px] md:left-[60px] text-on-primary max-w-2xl">
+                            <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] mb-3 opacity-80">2026 여름 농할 특가전</p>
+                            <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-tight mb-6">
+                                신선한 자연,<br />건강한 밥상.
+                            </h2>
+                            <p class="font-body-lg opacity-80 mb-8 max-w-md hidden md:block">
+                                농할 30%에 추가 5% 이중 할인까지. 산지 직송 신선 식품을 온누리마켓에서 지금 바로 만나보세요.
+                            </p>
+                            <div class="flex items-center gap-4">
+                                <button class="bg-on-primary text-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all hover:bg-primary hover:text-on-primary hover:border hover:border-on-primary active:scale-95">지금 쇼핑하기</button>
+                                <button class="border border-on-primary text-on-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all hover:bg-on-primary hover:text-primary active:scale-95">농할 혜택 보기</button>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Slide 2: 농할 특가 하이라이트 -->
+                    <div class="relative h-full flex-shrink-0" style="width:33.3333%;background:linear-gradient(135deg,#1a3a2e 0%,#2d6b4f 60%,#3d8a65 100%)">
+                        <div class="absolute inset-0" style="background:radial-gradient(ellipse at 70% 50%, rgba(84,189,132,0.25) 0%, transparent 65%)"></div>
+                        <div class="absolute bottom-16 md:bottom-[60px] left-[20px] md:left-[60px] text-white max-w-2xl">
+                            <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] mb-3" style="color:rgba(255,255,255,0.7)">2026 농할 특가 하이라이트</p>
+                            <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-tight mb-6">
+                                산지에서 바로,<br />온누리 농할 컬렉션.
+                            </h2>
+                            <p class="font-body-lg mb-8 max-w-md hidden md:block" style="color:rgba(255,255,255,0.75)">
+                                농가와 직거래, 중간 유통 없이 신선하게. 농할 이중 할인으로 더 저렴하게 만나보세요.
+                            </p>
+                            <div class="flex items-center gap-4">
+                                <button class="h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95" style="background:#54BD84;color:#fff">농할 특가 보기</button>
+                                <button class="border h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95" style="border-color:rgba(255,255,255,0.5);color:rgba(255,255,255,0.85)">채소·과일</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: 쇼핑몰 입점 혜택 -->
+                    <div class="relative h-full flex-shrink-0" style="width:33.3333%;background:linear-gradient(135deg,#0f1f2e 0%,#1a3550 60%,#1e4a6e 100%)">
+                        <div class="absolute inset-0" style="background:radial-gradient(ellipse at 30% 60%, rgba(84,189,132,0.18) 0%, transparent 60%)"></div>
+                        <div class="absolute bottom-16 md:bottom-[60px] left-[20px] md:left-[60px] text-white max-w-2xl">
+                            <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] mb-3" style="color:rgba(255,255,255,0.7)">쇼핑몰 입점 혜택</p>
+                            <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-tight mb-6">
+                                최저 수수료,<br />온누리 마켓과 함께 해요.
+                            </h2>
+                            <p class="font-body-lg mb-8 max-w-md hidden md:block" style="color:rgba(255,255,255,0.75)">
+                                합리적인 수수료와 전담 MD 지원으로 온누리마켓 입점의 문턱을 낮췄습니다.
+                            </p>
+                            <div class="flex items-center gap-4">
+                                <button class="h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95" style="background:#54BD84;color:#fff">입점 신청하기</button>
+                                <button class="border h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95" style="border-color:rgba(255,255,255,0.5);color:rgba(255,255,255,0.85)">혜택 알아보기</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div
-                    class="absolute bottom-8 right-[20px] md:right-[60px] text-on-primary flex flex-col items-center gap-2 opacity-60">
-                    <span class="font-label-sm text-label-sm uppercase tracking-widest"
-                        style="writing-mode: vertical-rl; letter-spacing: 0.2em;">Scroll</span>
-                    <div class="w-px h-12 bg-on-primary animate-pulse"></div>
+
+                <!-- Prev / Next buttons -->
+                <button id="hero-prev" class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110" style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.25);border-radius:2px">
+                    <span class="material-symbols-outlined text-white" style="font-size:22px">chevron_left</span>
+                </button>
+                <button id="hero-next" class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110" style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.25);border-radius:2px">
+                    <span class="material-symbols-outlined text-white" style="font-size:22px">chevron_right</span>
+                </button>
+
+                <!-- Dot indicators -->
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="hero-dots">
+                    <button class="hero-dot w-6 h-1.5 transition-all duration-300" style="background:rgba(255,255,255,0.9)" data-index="0"></button>
+                    <button class="hero-dot w-2 h-1.5 transition-all duration-300" style="background:rgba(255,255,255,0.4)" data-index="1"></button>
+                    <button class="hero-dot w-2 h-1.5 transition-all duration-300" style="background:rgba(255,255,255,0.4)" data-index="2"></button>
+                </div>
+
+                <!-- Scroll indicator (slide 1 only) -->
+                <div class="absolute bottom-8 right-[20px] md:right-[60px] text-white flex flex-col items-center gap-2 opacity-60 pointer-events-none transition-opacity duration-500" id="hero-scroll-ind">
+                    <span class="font-label-sm text-label-sm uppercase tracking-widest" style="writing-mode:vertical-rl;letter-spacing:0.2em">Scroll</span>
+                    <div class="w-px h-12 bg-white animate-pulse"></div>
                 </div>
             </div>
         </section>
+        <script>
+        (function() {
+            var current = 0;
+            var total = 3;
+            var slides = document.getElementById('hero-slides');
+            var dots = document.querySelectorAll('.hero-dot');
+            var scrollInd = document.getElementById('hero-scroll-ind');
+            var timer;
+
+            function goTo(index) {
+                current = index;
+                slides.style.transform = 'translateX(-' + (100 / total * current) + '%)';
+                dots.forEach(function(d, i) {
+                    if (i === current) {
+                        d.style.width = '24px';
+                        d.style.background = 'rgba(255,255,255,0.9)';
+                    } else {
+                        d.style.width = '8px';
+                        d.style.background = 'rgba(255,255,255,0.4)';
+                    }
+                });
+                if (scrollInd) scrollInd.style.opacity = current === 0 ? '0.6' : '0';
+            }
+
+            function next() { goTo((current + 1) % total); }
+
+            dots.forEach(function(d) {
+                d.addEventListener('click', function() {
+                    clearInterval(timer);
+                    goTo(parseInt(this.dataset.index));
+                    timer = setInterval(next, 5000);
+                });
+            });
+
+            timer = setInterval(next, 5000);
+        })();
+        </script>
 
         <!-- 실시간 타임 특가 & 베스트 Section -->
         <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
