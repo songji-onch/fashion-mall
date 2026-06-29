@@ -1,0 +1,590 @@
+<title>온누리마켓 · 랜딩 페이지 명세서</title>
+<meta name="description" content="온누리마켓 쇼핑몰 랜딩 페이지 각 섹션 정의, 시각적 구조, 관리 기능 명세서">
+<style>
+:root {
+  --bg:#F4F7F5; --surface:#fff; --green:#54BD84; --green-dim:#E6F4EC;
+  --green-dk:#2B6B49; --orange:#FF601C; --dark:#1A2119; --mid:#64756A;
+  --light:#B8C9BF; --border:#D4E0D8;
+  --red:#ba1a1a; --surface-low:#f8f9fa;
+  --font:'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:var(--font);font-size:14px;line-height:1.6}
+
+.topbar{position:sticky;top:0;z-index:100;background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:52px}
+.topbar-logo{font-weight:800;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
+.topbar-meta{color:var(--light);font-size:12px}
+
+.page{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 52px)}
+
+.sidebar{position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;background:var(--surface);border-right:1px solid var(--border);padding:16px 0}
+.sb-label{padding:8px 20px 4px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--light)}
+.sidebar a{display:flex;align-items:center;gap:8px;padding:7px 20px;font-size:12.5px;color:var(--mid);text-decoration:none;transition:all .15s;border-left:2px solid transparent}
+.sidebar a:hover{color:var(--dark);background:var(--green-dim);border-left-color:var(--green)}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-f{background:var(--dark)}.dot-d{background:var(--green)}.dot-u{background:var(--light)}
+
+.main{padding:32px 36px;max-width:980px}
+
+.page-header{margin-bottom:28px;padding-bottom:20px;border-bottom:2px solid var(--border)}
+.page-header h1{font-size:26px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+.page-header p{color:var(--mid);font-size:13px}
+
+.ov-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;margin-bottom:24px}
+.ov-card h2{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.ov-card h2::before{content:'';display:block;width:3px;height:16px;background:var(--green);border-radius:2px}
+
+.type-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px}
+.type-table th{background:var(--bg);padding:9px 14px;text-align:left;font-weight:700;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);border-bottom:1px solid var(--border)}
+.type-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px}
+.type-table tr:last-child td{border-bottom:none}
+
+.layout-diagram{display:flex;flex-direction:column;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px}
+.lr{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:4px;font-size:12px}
+.lr.fixed{background:var(--dark);color:#fff}
+.lr.dynamic{background:var(--green-dim);color:var(--green-dk);border:1px dashed var(--green)}
+.lr.chrome{background:#fff;color:var(--mid);border:1px solid var(--border)}
+.lr.sep{background:transparent;color:var(--light);font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:2px 12px}
+.lbadge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.lb-f{background:rgba(255,255,255,.2);color:#fff}
+.lb-d{background:var(--green);color:#fff}
+.lb-u{background:var(--bg);color:var(--mid)}
+
+.flow{display:flex;align-items:flex-start;gap:0;margin-top:16px;flex-wrap:wrap;row-gap:8px}
+.fstep{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:80px}
+.fbox{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;padding:8px 10px;font-size:11px;text-align:center;width:100%;line-height:1.4}
+.fbox.hi{border-color:var(--green);background:var(--green-dim);font-weight:700;color:var(--green-dk)}
+.farrow{flex-shrink:0;color:var(--light);font-size:18px;margin-top:12px;padding:0 4px}
+.fbranch{display:flex;gap:6px;width:100%}
+.fbranch-item{flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:6px;padding:7px 8px;font-size:11px;text-align:center;line-height:1.4}
+.fbranch-item.ta{border-color:var(--green)}
+.fbranch-item.tb{border-color:var(--dark)}
+
+.grp-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin:32px 0 12px;display:flex;align-items:center;gap:8px}
+.grp-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px}
+.card-preview{width:100%;height:auto;position:relative;background:var(--bg);border-bottom:1px solid var(--border)}
+.card-preview-img{width:100%;height:auto;display:block}
+.card-body{padding:18px 20px}
+.card-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.card-title{font-size:15px;font-weight:700}
+.tag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:3px;white-space:nowrap}
+.tf{background:var(--dark);color:#fff}
+.td{background:var(--green);color:#fff}
+.tu{background:var(--bg);color:var(--mid);border:1px solid var(--border)}
+
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sblock h4{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);margin-bottom:8px}
+.sblock ul{list-style:none}
+.sblock li{font-size:12.5px;padding:3px 0 3px 14px;position:relative;line-height:1.55}
+.sblock li::before{content:'–';position:absolute;left:0;color:var(--light)}
+
+/* ── previews ── */
+.pv-announce{background:var(--green);height:60px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;letter-spacing:.04em;font-weight:600;gap:6px}
+.pv-ann-x{margin-left:12px;opacity:.7;font-size:14px;cursor:pointer}
+
+.pv-header{background:#fff;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 20px;gap:8px}
+.ph-row{display:flex;align-items:center;width:100%;gap:10px}
+.ph-logo{font-size:13px;font-weight:800;letter-spacing:-.01em;color:var(--dark);flex-shrink:0;display:flex;align-items:center;gap:5px}
+.ph-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+.ph-search{flex:1;height:22px;background:var(--bg);border:1px solid var(--border);border-radius:11px}
+.ph-icons{display:flex;gap:5px}
+.ph-icon{width:20px;height:20px;background:var(--green-dim);border-radius:50%}
+.ph-gnb{display:flex;gap:12px;overflow:hidden}
+.ph-tab{font-size:9px;letter-spacing:.04em;color:var(--mid);padding-bottom:3px;white-space:nowrap}
+.ph-tab.active{color:#1b1c1c;border-bottom:2px solid #1b1c1c;font-weight:700}
+
+.pv-hero{height:100%;background:linear-gradient(135deg,#1a3a2e 0%,#2d6b4f 60%,#3d8a65 100%);position:relative;display:flex;align-items:flex-end;padding:0 16px 10px}
+.ph-eyebrow{font-size:8px;letter-spacing:.1em;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:2px}
+.ph-title{font-size:13px;font-weight:800;color:#fff;line-height:1.2}
+.ph-btns{display:flex;gap:5px;margin-top:6px}
+.ph-btn{height:18px;padding:0 8px;font-size:8px;display:flex;align-items:center;border-radius:2px}
+.ph-btn.pr{background:var(--green);color:#fff}
+.ph-btn.ol{border:1px solid rgba(255,255,255,.6);color:rgba(255,255,255,.9)}
+.ph-dots{position:absolute;bottom:8px;right:16px;display:flex;gap:3px;align-items:center}
+.ph-dot{height:3px;border-radius:2px}
+.ph-dot.a{width:14px;background:rgba(255,255,255,.9)}
+.ph-dot:not(.a){width:5px;background:rgba(255,255,255,.4)}
+
+.pv-ts{background:#fff;height:100%;padding:10px 16px;display:flex;flex-direction:column;gap:8px}
+.pts-hdr{display:flex;align-items:center;justify-content:space-between}
+.pts-title{font-size:11px;font-weight:800}
+.pts-timer{background:var(--dark);color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;font-variant-numeric:tabular-nums}
+.pts-grid{display:flex;gap:6px;flex:1}
+.pc{flex:1;display:flex;flex-direction:column;gap:2px}
+.pc-img{aspect-ratio:1;background:var(--bg);border-radius:3px;position:relative;overflow:hidden}
+.pc-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pc-badges{position:absolute;top:3px;left:3px;display:flex;flex-direction:column;gap:2px;z-index:1}
+.pc-badge{background:var(--green);color:#fff;font-size:6px;padding:1px 3px;font-weight:700;border-radius:1px}
+.pc-badge-red{background:var(--red);color:#fff;font-size:6px;padding:1px 3px;font-weight:700;border-radius:1px}
+.pc-line{height:5px;background:var(--bg);border-radius:2px;margin-top:2px}
+.pc-line.s{width:60%}
+.pc-price{height:6px;background:var(--green-dim);border-radius:2px;width:70%}
+
+.pv-mdpick{background:#fff;height:100%;padding:10px 16px;display:flex;flex-direction:column;gap:8px}
+.pmd-title{font-size:11px;font-weight:800}
+.pmd-cards{display:flex;gap:6px;flex:1}
+.pmd-card{flex:1;background:var(--bg);border-radius:4px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:6px;background-size:cover;background-position:center}
+.pmd-card::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 60%)}
+.pmd-ov{position:relative;z-index:1}
+.pmd-tag{display:inline-block;background:var(--green);color:#fff;font-size:7px;padding:1px 4px;font-weight:700;border-radius:1px}
+.pmd-name{font-size:8px;color:rgba(255,255,255,.9);margin-top:2px;font-weight:600}
+
+.pv-editorial{height:100%;background:var(--surface-low);display:flex;align-items:stretch}
+.ped-left{flex:1;display:flex;flex-direction:column;justify-content:center;padding:12px 16px;gap:4px}
+.ped-eyebrow{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:700}
+.ped-title{font-size:12px;font-weight:800;color:#1b1c1c;line-height:1.25}
+.ped-btns{display:flex;gap:4px;margin-top:6px}
+.ped-btn{height:17px;padding:0 8px;font-size:7.5px;display:inline-flex;align-items:center;border-radius:2px;white-space:nowrap}
+.ped-btn.primary{background:var(--green);color:#fff}
+.ped-btn.outline{border:1px solid var(--green);color:var(--green-dk)}
+.ped-right{width:90px;flex-shrink:0;background:var(--bg);overflow:hidden}
+.ped-right img{width:100%;height:100%;object-fit:cover}
+
+.pv-bento{background:#fff;height:100%;padding:8px 12px;display:flex;flex-direction:column;gap:6px}
+.pbn-title{font-size:10px;font-weight:800}
+.pbn-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(3,1fr);gap:3px;flex:1}
+.pbn-cell{background:var(--bg);border-radius:2px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:3px}
+.pbn-cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pbn-cell-ov{position:relative;z-index:1;font-size:7px;color:#fff;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.pbn-cell-dark::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.3)}
+.pbn-cell.large{grid-column:1/5;grid-row:1/3;background:var(--green);display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:6px;gap:3px}
+.pbn-large-sale{font-size:8px;font-weight:700;background:var(--red);color:#fff;padding:1px 4px;border-radius:1px}
+.pbn-large-txt{font-size:10px;font-weight:800;color:#fff;line-height:1.2}
+
+.pv-ranking{background:#fff;height:100%;padding:10px 16px;display:flex;gap:12px}
+.prk-list{flex:1;display:flex;flex-direction:column;gap:4px}
+.prk-hdr{font-size:10px;font-weight:800;margin-bottom:3px}
+.prk-item{display:flex;align-items:center;gap:5px}
+.prk-num{font-size:9px;font-weight:800;color:var(--mid);width:12px;flex-shrink:0}
+.prk-num.top{color:var(--green-dk)}
+.prk-name{font-size:8px;color:var(--dark);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.prk-pct{font-size:7px;font-weight:700;color:var(--red);flex-shrink:0}
+.prk-img{width:64px;flex-shrink:0;border-radius:4px;overflow:hidden;height:100%}
+.prk-img img{width:100%;height:100%;object-fit:cover}
+
+.pv-strip{background:#fff;height:100px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;padding:0 16px}
+.pst-title{font-size:10px;font-weight:700;color:var(--mid);letter-spacing:.08em;text-transform:uppercase}
+.pst-logos{display:flex;gap:6px;align-items:center}
+.pst-name{font-size:8px;font-weight:600;color:var(--mid);padding:3px 7px;background:var(--bg);border:1px solid var(--border);border-radius:3px;white-space:nowrap}
+
+.pv-cta{height:130px;background:var(--orange);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;text-align:center;padding:12px;position:relative;overflow:hidden}
+.pv-cta::before{content:'';position:absolute;width:160px;height:160px;border-radius:50%;top:50%;left:20%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,255,255,.12) 0%,transparent 70%)}
+.pct-title{font-size:13px;font-weight:800;color:#fff;position:relative}
+.pct-sub{font-size:9px;color:rgba(255,255,255,.85);position:relative}
+.pct-btns{display:flex;gap:6px;margin-top:4px;position:relative}
+.pct-btn{height:20px;padding:0 10px;font-size:9px;font-weight:700;display:flex;align-items:center;border-radius:50px}
+.pct-btn.w{background:#fff;color:var(--dark)}
+.pct-btn.o{border:1.5px solid rgba(255,255,255,.8);color:#fff}
+
+.pv-footer{background:var(--dark);height:120px;display:flex;gap:16px;padding:12px 20px}
+.pft-info{flex:1;display:flex;flex-direction:column;gap:5px;justify-content:center}
+.pft-line{height:5px;background:rgba(255,255,255,.1);border-radius:2px}
+.pft-links{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;flex-shrink:0}
+.pft-col{display:flex;flex-direction:column;gap:4px}
+.pft-ch{height:6px;background:rgba(255,255,255,.3);border-radius:2px;margin-bottom:2px}
+.pft-ci{height:5px;background:rgba(255,255,255,.1);border-radius:2px}
+
+.pv-float{background:var(--surface-low);height:100%;display:flex;align-items:center;justify-content:space-around;padding:8px 24px}
+.pfl-panel{display:flex;flex-direction:column;align-items:center;gap:5px}
+.pfl-label{font-size:8px;color:var(--mid);font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.pfl-card{width:56px;height:56px;border-radius:4px;overflow:hidden}
+.pfl-card img{width:100%;height:100%;object-fit:cover}
+
+.pv-banner{height:120px;position:relative;overflow:hidden;background:var(--bg)}
+.pv-banner img{width:100%;height:100%;object-fit:cover}
+
+.pv-ps{background:#fff;height:100%;padding:10px 16px;display:flex;flex-direction:column;gap:6px}
+.pps-hdr{display:flex;align-items:baseline;gap:8px}
+.pps-title{font-size:11px;font-weight:800}
+.pps-sub{font-size:9px;color:var(--mid)}
+
+.pv-tabbar{background:#fff;height:80px;display:flex;align-items:center;justify-content:space-around;padding:0 12px;border-top:1px solid var(--border)}
+.ptb-item{display:flex;flex-direction:column;align-items:center;gap:3px}
+.ptb-icon{width:20px;height:20px;background:var(--bg);border-radius:4px}
+.ptb-icon.a{background:var(--green-dim)}
+.ptb-label{font-size:8px;color:var(--mid)}
+.ptb-label.a{color:var(--green);font-weight:700}
+
+@media(max-width:700px){.page{grid-template-columns:1fr}.sidebar{display:none}.sgrid{grid-template-columns:1fr}}
+</style>
+
+<!-- ── Top Bar ── -->
+<div class="topbar">
+  <span class="topbar-logo">Onnuri Market</span>
+  <span class="topbar-meta">랜딩 페이지 명세서 · fashion-mall.html · 2026-06-29</span>
+</div>
+
+<div class="page">
+
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar">
+    <div class="sb-label">개요</div>
+    <a href="#s-overview"><span class="dot dot-u"></span> 섹션 관리 방식</a>
+    <a href="#s-layout"><span class="dot dot-u"></span> 페이지 레이아웃</a>
+    <div class="sb-label">고정 섹션</div>
+    <a href="#s-announce"><span class="dot dot-f"></span> 공지 바</a>
+    <a href="#s-header"><span class="dot dot-f"></span> 헤더 + GNB</a>
+    <a href="#s-hero"><span class="dot dot-f"></span> 히어로 배너</a>
+    <a href="#s-timesale"><span class="dot dot-f"></span> 실시간 타임 특가</a>
+    <a href="#s-mdpick"><span class="dot dot-f"></span> MD's Pick</a>
+    <a href="#s-editorial"><span class="dot dot-f"></span> 에디토리얼</a>
+    <a href="#s-ranking"><span class="dot dot-f"></span> 실시간 랭킹</a>
+    <a href="#s-strip"><span class="dot dot-f"></span> 입점 마켓 Strip</a>
+    <a href="#s-cta"><span class="dot dot-f"></span> Footer CTA</a>
+    <a href="#s-footer"><span class="dot dot-f"></span> 푸터</a>
+    <div class="sb-label">동적 섹션</div>
+    <a href="#s-product"><span class="dot dot-d"></span> 상품 진열 섹션</a>
+    <a href="#s-inlinebanner"><span class="dot dot-d"></span> 인라인 배너</a>
+    <div class="sb-label">UI 요소</div>
+    <a href="#s-bento"><span class="dot dot-u"></span> 카테고리 쇼케이스</a>
+    <a href="#s-floating"><span class="dot dot-u"></span> 플로팅 배너</a>
+    <a href="#s-tabbar"><span class="dot dot-u"></span> 모바일 탭 바</a>
+  </nav>
+
+  <!-- ── Main ── -->
+  <main class="main">
+    <div class="page-header">
+      <h1>온누리마켓 랜딩 페이지 명세서</h1>
+      <p>각 섹션의 시각적 구조 · 구성 · 관리 기능 · 동작 방식을 정의합니다.</p>
+    </div>
+
+    <!-- Overview -->
+    <div id="s-overview" class="ov-card">
+      <h2>섹션 관리 방식</h2>
+      <table class="type-table">
+        <thead><tr><th>구분</th><th>관리 권한</th><th>해당 섹션</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tf">고정 섹션</span></td>
+            <td>내용(텍스트·이미지·상품) 수정만 가능<br><span style="font-size:11px;color:var(--mid)">삭제·순서 변경 불가</span></td>
+            <td>히어로 배너, 실시간 타임 특가, MD's Pick, 에디토리얼, 실시간 랭킹, 입점 마켓 Strip, Footer CTA, 푸터</td>
+          </tr>
+          <tr>
+            <td><span class="tag td">동적 섹션</span></td>
+            <td>추가·삭제·노출 순서 변경 가능<br><span style="font-size:11px;color:var(--mid)">섹션 생성 시 타입 선택 필요</span></td>
+            <td>딱7일특가, 채소, 과일, 수산, 가공식품, 인라인 배너 등</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);margin-bottom:12px">섹션 추가 흐름</div>
+      <div class="flow">
+        <div class="fstep"><div class="fbox hi">＋ 섹션 추가<br>버튼 클릭</div></div>
+        <div class="farrow">›</div>
+        <div class="fstep">
+          <div style="font-size:10px;color:var(--mid);margin-bottom:4px;width:100%;text-align:center">타입 선택</div>
+          <div class="fbranch">
+            <div class="fbranch-item ta"><strong>상품 진열형</strong><br><span style="font-size:10px;color:var(--mid)">타이틀 + 상품 그리드</span></div>
+            <div class="fbranch-item tb"><strong>인라인 배너형</strong><br><span style="font-size:10px;color:var(--mid)">이미지·텍스트 배너</span></div>
+          </div>
+        </div>
+        <div class="farrow">›</div>
+        <div class="fstep"><div class="fbox">노출 순서<br>지정</div></div>
+        <div class="farrow">›</div>
+        <div class="fstep"><div class="fbox">노출 기간<br>설정 (선택)</div></div>
+        <div class="farrow">›</div>
+        <div class="fstep"><div class="fbox hi">저장 &amp;<br>미리보기</div></div>
+      </div>
+    </div>
+
+    <!-- Layout diagram -->
+    <div id="s-layout" class="ov-card">
+      <h2>페이지 레이아웃 (섹션 순서)</h2>
+      <div class="layout-diagram">
+        <div class="lr chrome"><span class="lbadge lb-u">UI</span> 공지 바</div>
+        <div class="lr chrome"><span class="lbadge lb-u">UI</span> 헤더 · 카테고리 GNB</div>
+        <div class="lr sep">── 고정 섹션 ─────────────────────────────────</div>
+        <div class="lr fixed"><span class="lbadge lb-f">고정</span> 히어로 배너 (롤링)</div>
+        <div class="lr fixed"><span class="lbadge lb-f">고정</span> 실시간 타임 특가 &amp; 베스트</div>
+        <div class="lr sep">── 동적 섹션 영역 ────────────────────────────</div>
+        <div class="lr dynamic"><span class="lbadge lb-d">동적</span> 예: 딱7일특가 (상품 진열형)</div>
+        <div class="lr dynamic"><span class="lbadge lb-d">동적</span> 예: 인라인 배너 (인라인 배너형)</div>
+        <div class="lr dynamic"><span class="lbadge lb-d">동적</span> 예: 채소 · 과일 · 수산 · 가공식품 (상품 진열형)</div>
+        <div class="lr sep">── 고정 섹션 재개 ────────────────────────────</div>
+        <div class="lr fixed"><span class="lbadge lb-f">고정</span> MD's Pick (우수 입점 마켓 쇼케이스)</div>
+        <div class="lr fixed"><span class="lbadge lb-f">고정</span> 에디토리얼 / 캠페인 (2026 농할 특가 하이라이트)</div>
+        <div class="lr fixed"><span class="lbadge lb-f">고정</span> 실시간 랭킹 &amp; 베스트</div>
+        <div class="lr fixed"><span class="lbadge lb-f">고정</span> 카테고리 쇼케이스 (벤토 그리드)</div>
+        <div class="lr sep">── 하단 고정 영역 ────────────────────────────</div>
+        <div class="lr fixed"><span class="lbadge lb-f">고정</span> 입점 마켓 브랜드 Strip</div>
+        <div class="lr fixed"><span class="lbadge lb-f">고정</span> 입점 문의 CTA (Footer CTA Card)</div>
+        <div class="lr fixed"><span class="lbadge lb-f">고정</span> 푸터</div>
+        <div class="lr chrome"><span class="lbadge lb-u">UI</span> 모바일 탭 바 · 플로팅 배너 (오버레이)</div>
+      </div>
+    </div>
+
+    <!-- ===== FIXED ===== -->
+    <div class="grp-label"><span class="tag tf">고정</span> 고정 섹션</div>
+
+    <!-- 공지 바 -->
+    <div id="s-announce" class="card">
+      <div class="card-preview">
+        <div class="pv-announce">
+          농할30+5% 이중 할인 &nbsp;·&nbsp; 신규 가입 쿠폰 증정 &nbsp;·&nbsp; 고객센터 070-4138-4036
+          <span class="pv-ann-x">✕</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">공지 바 (Announcement Bar)</span><span class="tag tu">UI 크롬</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성 / 위치</h4><ul><li>최상단 고정 (헤더 위)</li><li>텍스트 1줄 + 우측 닫기(✕) 버튼</li><li>배경: 브랜드 그린(#54BD84), 흰색 텍스트</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>공지 텍스트 입력 및 수정</li><li>노출 기간 설정 (시작일 ~ 종료일)</li><li>배경색 / 텍스트색 설정</li><li>노출 ON/OFF 토글</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>닫기 버튼 클릭 시 숨김 (세션 유지)</li><li>노출 기간 외 자동 비노출</li><li>모바일 / 데스크탑 동일 노출</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 헤더 + GNB -->
+    <div id="s-header" class="card">
+      <div class="card-preview">
+        <img class="card-preview-img" src="./스펙/1.헤더카테고리_gnb.png" alt="헤더 + GNB 스크린샷">
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">헤더 (TopAppBar) + 카테고리 GNB</span><span class="tag tu">UI 크롬</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>로고 (좌) · 검색창 (중앙) · 장바구니·찜·알림 (우)</li><li>스크롤 시 상단 고정 sticky (backdrop-blur)</li><li>GNB: 가로 스크롤 탭 카테고리 목록 (9개)</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>로고 이미지 교체</li><li>검색창 플레이스홀더 문구 설정</li><li>GNB 카테고리 생성 / 수정 / 삭제</li><li>카테고리 노출 순서 드래그 정렬</li><li>카테고리별 연결 URL 및 뱃지(NEW·HOT) 설정</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>스크롤 시 헤더 sticky 전환 + 그림자 표시</li><li>GNB 탭 클릭 → 해당 카테고리 페이지 또는 앵커 이동</li><li>장바구니 뱃지 숫자 동적 갱신</li><li>활성 탭: border-bottom 2px solid #000</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 히어로 배너 -->
+    <div id="s-hero" class="card">
+      <div class="card-preview">
+        <img class="card-preview-img" src="./스펙/2.히어로 배너.png" alt="히어로 배너 스크린샷">
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">히어로 배너 (Rolling Carousel)</span><span class="tag tf">고정</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>최대 N개 슬라이드 자동 롤링 (현재 3개)</li><li>슬라이드 타입: 이미지형 / 텍스트+배경색형</li><li>좌우 화살표 + 하단 도트 인디케이터</li><li>5초 자동 전환</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>슬라이드 추가 / 수정 / 삭제</li><li>이미지형: 모바일·데스크탑 이미지 각각 업로드</li><li>텍스트형: 배경색(단색·그라디언트) + 헤드라인 입력</li><li>버튼 라벨 및 링크 URL 설정 (최대 2개)</li><li>자동 전환 간격(초) 설정</li><li>슬라이드별 노출 기간 설정</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>setInterval 5000ms 자동 슬라이드 전환</li><li>도트 클릭 시 해당 슬라이드로 즉시 이동, 타이머 리셋</li><li>좌우 화살표 수동 이동 가능</li><li>CSS transform: translateX 슬라이드 애니메이션</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 실시간 타임 특가 -->
+    <div id="s-timesale" class="card">
+      <div class="card-preview">
+        <img class="card-preview-img" src="./스펙/3.실시간 타임 특가 & 베스트.png" alt="실시간 타임 특가 스크린샷">
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">실시간 타임 특가 &amp; 베스트</span><span class="tag tf">고정</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>섹션 타이틀 + 카운트다운 타이머</li><li>상품 5개 가로 그리드</li><li>카드별: 이미지 · 카테고리 뱃지(green) · 할인율 뱃지(red) · 가격 · 찜 버튼</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>섹션 타이틀 / 부제 문구 수정</li><li>타이머 종료 시각 설정</li><li>진열 상품 선택 및 순서 정렬 (최대 5개)</li><li>섹션 노출 ON/OFF 토글</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>카운트다운 타이머 JS setInterval 실시간 갱신</li><li>타이머 만료 시 섹션 자동 비노출 또는 다음 특가 전환</li><li>상품 호버 시 "장바구니 담기" 슬라이드업 오버레이 노출</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MD's Pick -->
+    <div id="s-mdpick" class="card">
+      <div class="card-preview">
+        <img class="card-preview-img" src="./스펙/4.우수 입점 마켓 쇼케이스.png" alt="MD's Pick 스크린샷">
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">MD's Pick (우수 입점 마켓 쇼케이스)</span><span class="tag tf">고정</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>3개 쇼케이스 카드 (이미지 배경 + 텍스트 오버레이)</li><li>카드별: 배경 이미지 · 태그 뱃지 · 마켓명</li><li>목적: MD 추천 상품·컬렉션 기획전 노출</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>쇼케이스 카드 추가 / 수정 / 삭제</li><li>카드별 이미지, 태그, 타이틀, 연결 URL 설정</li><li>카드 노출 순서 정렬</li><li>섹션 노출 ON/OFF 토글</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>각 카드 클릭 시 설정 URL로 이동</li><li>background-image 위 linear-gradient overlay (to top)로 텍스트 가독성 확보</li><li>호버 시 scale 또는 border 강조 효과</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 에디토리얼 -->
+    <div id="s-editorial" class="card">
+      <div class="card-preview">
+        <img class="card-preview-img" src="./스펙/5.산지에서 바로, 온누리 농할 컬렉션..png" alt="에디토리얼 스크린샷">
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">에디토리얼 / 캠페인 배너</span><span class="tag tf">고정</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>배경: #f8f9fa (surface-container-low)</li><li>좌: eyebrow(그린) · 헤드라인 · CTA 버튼 2개</li><li>우: 캠페인 이미지 (banners/13)</li><li>목적: 시즌 캠페인·기획전 강조 노출</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>배경 이미지 교체 (모바일 / 데스크탑 각각)</li><li>텍스트(소제목·헤드라인·설명) 수정</li><li>버튼 라벨 및 링크 URL 설정 (최대 2개)</li><li>섹션 노출 ON/OFF 토글</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>배경 이미지 없으면 #f8f9fa 컬러로 폴백</li><li>텍스트: 좌측 정렬 (모바일: 세로 스택)</li><li>CTA 버튼 클릭 시 설정 URL 이동</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 실시간 랭킹 -->
+    <div id="s-ranking" class="card">
+      <div class="card-preview">
+        <img class="card-preview-img" src="./스펙/8.실시간랭킹.png" alt="실시간 랭킹 스크린샷">
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">실시간 랭킹 &amp; 베스트</span><span class="tag tf">고정</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>좌: 실시간 인기 랭킹 리스트 (상위 5개)</li><li>우: 베스트 상품 대표 이미지</li><li>1~3위 강조 스타일 (#2B6B49)</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>랭킹 기준 설정 (판매량 / 조회수 / 찜수)</li><li>랭킹 집계 기간 (실시간 / 일간 / 주간)</li><li>베스트 상품 이미지 교체 및 링크 설정</li><li>노출 상품 수 설정</li><li>섹션 노출 ON/OFF 토글</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>랭킹 API로 주기적 갱신</li><li>순위 변동 시 ↑↓ 아이콘으로 상승/하락 표시</li><li>1~3위 강조 스타일 적용</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 입점 마켓 Strip -->
+    <div id="s-strip" class="card">
+      <div class="card-preview">
+        <div class="pv-strip">
+          <div class="pst-title">입점 마켓 브랜드</div>
+          <div class="pst-logos">
+            <span class="pst-name">장위전통시장</span>
+            <span class="pst-name">계양산</span>
+            <span class="pst-name">가락시장</span>
+            <span class="pst-name">우메종</span>
+            <span class="pst-name">맘스케이크</span>
+            <span class="pst-name">산들정</span>
+            <span class="pst-name">동원</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">입점 마켓 브랜드 Strip</span><span class="tag tf">고정</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>입점 마켓 로고 가로 스크롤 스트립</li><li>현재: 장위전통시장, 계양산, 가락시장, 우메종, 맘스케이크, 산들정, 동원</li><li>목적: 신뢰도 및 파트너사 노출</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>마켓 로고 이미지 추가 / 삭제</li><li>마켓별 클릭 링크 URL 설정</li><li>노출 순서 정렬</li><li>섹션 노출 ON/OFF 토글</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>모바일: 가로 스크롤 (스냅 포인트)</li><li>데스크탑: 고정 그리드 또는 자동 마퀴 스크롤</li><li>로고 클릭 시 해당 마켓 페이지 이동</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer CTA -->
+    <div id="s-cta" class="card">
+      <div class="card-preview">
+        <div class="pv-cta">
+          <div class="pct-title">온누리 마켓과 함께 하세요.</div>
+          <div class="pct-sub">최저 수수료 · 전담 MD 배정 · 20개 쇼핑몰 동시 입점</div>
+          <div class="pct-btns"><div class="pct-btn w">입점신청</div><div class="pct-btn o">상담 문의하기</div></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">입점 문의 CTA (Footer CTA Card)</span><span class="tag tf">고정</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>배경색 #FF601C (오렌지)</li><li>헤드라인 · 설명문 · CTA 버튼 2개 (rounded-full)</li><li>장식용 radial-gradient 오브</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>배경색 설정</li><li>헤드라인 / 설명 문구 수정</li><li>버튼 라벨 및 링크 URL 설정 (최대 2개)</li><li>노출 ON/OFF 토글</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>입점신청: 흰색 버튼 → 입점 신청 페이지 이동</li><li>상담문의: 아웃라인 버튼 → mailto 또는 채팅 연동</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <div id="s-footer" class="card">
+      <div class="card-preview">
+        <div class="pv-footer">
+          <div class="pft-info">
+            <div class="pft-line" style="width:80%"></div><div class="pft-line"></div>
+            <div class="pft-line" style="width:60%"></div><div class="pft-line" style="width:40%"></div>
+            <div style="margin-top:6px;height:4px;background:rgba(255,255,255,.3);border-radius:2px;width:50%"></div>
+          </div>
+          <div class="pft-links">
+            <div class="pft-col"><div class="pft-ch"></div><div class="pft-ci"></div><div class="pft-ci"></div><div class="pft-ci"></div></div>
+            <div class="pft-col"><div class="pft-ch"></div><div class="pft-ci"></div><div class="pft-ci"></div><div class="pft-ci"></div></div>
+            <div class="pft-col"><div class="pft-ch"></div><div class="pft-ci"></div><div class="pft-ci"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">푸터 (Footer)</span><span class="tag tf">고정</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>배경: #f8f9fa (surface-container-low)</li><li>좌: 사업자 정보 (상호명·대표·주소·CS 번호 등)</li><li>우: 링크 그리드 (쇼핑 / 고객지원 / 회사)</li><li>하단: 저작권 문구</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>사업자 정보 텍스트 수정</li><li>링크 그룹 항목 추가 / 수정 / 삭제</li><li>저작권 문구 수정</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DYNAMIC ===== -->
+    <div class="grp-label"><span class="tag td">동적</span> 동적 섹션 (관리자 설정 가능)</div>
+
+    <!-- 상품 진열 섹션 -->
+    <div id="s-product" class="card">
+      <div class="card-preview">
+        <img class="card-preview-img" src="./스펙/9.상품진열.png" alt="상품 진열 스크린샷">
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">상품 진열 섹션</span><span class="tag td">동적</span><span class="tag tu">상품 진열형</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>섹션 타이틀 + 부제 + 상품 카드 5개 가로 그리드</li><li>카드별: 이미지 · 카테고리 뱃지(green) · 할인율 뱃지(red) · 가격 · 찜 버튼</li><li>예시: 딱7일특가, 채소, 과일, 수산, 가공식품</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>섹션 타이틀 및 부제 문구 수정</li><li>진열 상품 선택 (상품 검색 후 추가)</li><li>진열 순서 드래그 정렬</li><li>페이지 내 섹션 노출 순서 변경</li><li>섹션 노출 ON/OFF 토글</li><li>노출 기간 설정 (시작일 ~ 종료일)</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>상품 카드 호버 시 "장바구니 담기" 오버레이 슬라이드업</li><li>찜 버튼 클릭 시 위시리스트 토글 (로그인 유도)</li><li>노출 기간 종료 시 자동 비노출</li><li>관리자가 고정 섹션 사이에서 순서 자유 배치</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 인라인 배너 -->
+    <div id="s-inlinebanner" class="card">
+      <div class="card-preview">
+        <div class="pv-banner">
+          <img src="https://nurimarket.co.kr/data/banners/18?ver=20260626113844" alt="인라인 배너">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">인라인 배너 (섹션 간 삽입 배너)</span><span class="tag td">동적</span><span class="tag tu">인라인 배너형</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>섹션과 섹션 사이에 삽입되는 풀 와이드 배너</li><li>이미지형 또는 텍스트+배경색형</li><li>CTA 버튼 선택적 포함</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>배너 이미지 교체 또는 텍스트+배경색 설정</li><li>클릭 링크 URL 설정</li><li>배너 노출 위치 변경 (섹션 사이 순서 조정)</li><li>노출 기간 설정</li><li>노출 ON/OFF 토글</li></ul></div>
+          <div class="sblock"><h4>동작 방식</h4><ul><li>배너 전체 영역 클릭 시 설정 URL 이동</li><li>모바일: object-fit: cover 비율 유지</li><li>노출 기간 외 자동 숨김</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== UI ===== -->
+    <div class="grp-label">UI 요소</div>
+
+    <!-- 카테고리 쇼케이스 -->
+    <div id="s-bento" class="card">
+      <div class="card-preview">
+        <img class="card-preview-img" src="./스펙/6.카테고리 쇼케이스.png" alt="카테고리 쇼케이스 스크린샷">
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">카테고리 쇼케이스 (벤토 그리드)</span><span class="tag tu">UI</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>6열 3행 CSS Grid 레이아웃</li><li>딱7일특가: 대형 셀 (col 1–4, row 1–2) — bg #54BD84, SALE 뱃지</li><li>5개 카테고리 셀: 상품 이미지 + 다크 오버레이 + 카테고리명</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>각 셀 이미지 교체 및 연결 URL 설정</li><li>셀 크기(grid-span) 설정</li><li>셀 노출 순서 변경</li><li>섹션 노출 ON/OFF 토글</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 플로팅 배너 -->
+    <div id="s-floating" class="card">
+      <div class="card-preview">
+        <img class="card-preview-img" src="./스펙/7.좌_우플로팅배너.png" alt="플로팅 배너 스크린샷">
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">플로팅 배너 (좌·우)</span><span class="tag tu">UI</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>화면 좌·우 고정 (position: fixed)</li><li>각 3개 슬라이드 자동 롤링</li><li>좌: KAF 도매시장 (banners/26), 우: 삼성전자 감사페스티벌 (banners/39)</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>좌·우 독립 관리</li><li>슬라이드 이미지 추가 / 교체 / 삭제</li><li>슬라이드별 링크 URL 설정</li><li>자동 전환 간격(초) 설정</li><li>노출 ON/OFF 토글 (좌·우 독립)</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 모바일 탭 바 -->
+    <div id="s-tabbar" class="card">
+      <div class="card-preview">
+        <div class="pv-tabbar">
+          <div class="ptb-item"><div class="ptb-icon a"></div><div class="ptb-label a">홈</div></div>
+          <div class="ptb-item"><div class="ptb-icon"></div><div class="ptb-label">카테고리</div></div>
+          <div class="ptb-item"><div class="ptb-icon"></div><div class="ptb-label">검색</div></div>
+          <div class="ptb-item"><div class="ptb-icon"></div><div class="ptb-label">위시리스트</div></div>
+          <div class="ptb-item"><div class="ptb-icon"></div><div class="ptb-label">마이</div></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-hdr"><span class="card-title">모바일 하단 탭 바 (Bottom Tab Bar)</span><span class="tag tu">모바일 전용</span></div>
+        <div class="sgrid">
+          <div class="sblock"><h4>구성</h4><ul><li>홈 / 카테고리 / 검색 / 위시리스트 / 마이</li><li>모바일 화면 하단 고정 (position: fixed)</li><li>현재 활성 탭 강조 표시</li></ul></div>
+          <div class="sblock"><h4>관리 기능</h4><ul><li>탭 아이콘 및 라벨 수정</li><li>탭별 연결 URL 설정</li><li>탭 노출 순서 변경</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between">
+      <span style="font-size:11px;color:var(--light)">온누리마켓 · 랜딩 페이지 명세서 v1.2</span>
+      <span style="font-size:11px;color:var(--light)">2026-06-29 · fashion-mall.html</span>
+    </div>
+  </main>
+</div>
