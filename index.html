@@ -218,25 +218,29 @@
 
         /* 롤링 dot 인디케이터 */
         .fb-dots {
+            position: absolute;
+            bottom: 16px;
+            left: 0;
+            right: 0;
             display: flex;
             justify-content: center;
-            gap: 4px;
-            padding: 6px 0 8px;
+            gap: 6px;
+            padding: 0;
+            z-index: 10;
         }
 
         .fb-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #c4c7c7;
-            transition: background 0.3s;
+            width: 8px;
+            height: 6px;
+            border-radius: 4px;
+            background-color: rgba(255, 96, 28, 0.4);
+            transition: all 0.3s;
             cursor: pointer;
-            padding: 4px;
-            box-sizing: content-box;
         }
 
         .fb-dot.active {
-            background: #54BD84;
+            width: 24px;
+            background-color: #FF601C;
         }
     </style>
 </head>
