@@ -1619,7 +1619,7 @@
         const headerWrap = document.getElementById('site-header-wrap');
         function updateFloatingTop() {
             const h = headerWrap.getBoundingClientRect().height;
-            document.documentElement.style.setProperty('--floating-top', (h + 10) + 'px');
+            document.documentElement.style.setProperty('--floating-top', (h + 24) + 'px');
         }
         updateFloatingTop();
         new ResizeObserver(updateFloatingTop).observe(headerWrap);
