@@ -141,14 +141,12 @@
         .floating-side {
             display: none;
             position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
+            top: var(--floating-top, 114px);
             z-index: 40;
-            width: 280px;
+            width: 260px;
             background: #f8f9fa;
-            border: 1px solid #e3e2e2;
             border-radius: 4px;
-            padding: 8px;
+            padding: 0;
         }
 
         .floating-side-left {
@@ -166,21 +164,20 @@
         }
 
         .floating-banner-card {
+            display: block;
             background: #fff;
-            border: 1px solid #c4c7c7;
             overflow: hidden;
             cursor: pointer;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .floating-banner-card:hover {
-            border-color: #54BD84;
             box-shadow: 0 4px 16px rgba(84, 189, 132, 0.18);
         }
 
         .floating-banner-card .fb-img {
             width: 100%;
-            aspect-ratio: 3 / 4;
+            aspect-ratio: 260 / 350;
             overflow: hidden;
             background: #f8f9fa;
         }
@@ -199,7 +196,7 @@
         }
 
         .floating-banner-card .fb-body {
-            padding: 8px 10px;
+            padding: 0;
             transition: opacity 0.4s;
         }
 
@@ -233,6 +230,9 @@
             border-radius: 50%;
             background: #c4c7c7;
             transition: background 0.3s;
+            cursor: pointer;
+            padding: 4px;
+            box-sizing: content-box;
         }
 
         .fb-dot.active {
@@ -243,84 +243,84 @@
 
 <body class="bg-background text-on-surface">
 
-    <!-- Announcement Bar -->
-    <div
-        class="bg-primary text-on-primary text-center py-2 px-4 flex items-center justify-center gap-4 text-[11px] tracking-widest uppercase">
-        <span>농할30+5% 이중 할인</span>
-        <span class="opacity-40">·</span>
-        <span>신규 가입 쿠폰 증정</span>
-        <span class="opacity-40">·</span>
-        <a href="#" class="underline hover:no-underline transition-all">고객센터 070-4138-4036</a>
-    </div>
+    <!-- Announcement Bar + Header (sticky wrapper) -->
+    <div id="site-header-wrap" class="sticky top-0 z-50">
 
-    <!-- TopAppBar -->
-    <header id="main-header"
-        class="sticky top-0 w-full z-50 bg-surface/90 backdrop-blur-md transition-all duration-300 ease-in-out">
+        <!-- Announcement Bar -->
         <div
-            class="relative flex items-center px-margin-mobile md:px-margin-desktop h-16 w-full max-w-container-max mx-auto">
-            <!-- 로고 (좌측 고정) -->
-            <a href="#" class="flex items-center gap-2 shrink-0 cursor-pointer select-none z-10">
-                <img src="onnuri.png" alt="온누리마켓 로고" class="h-12 w-auto" />
-                <h1 class="font-headline-md text-[24px] tracking-[0.15em] font-bold text-primary">
-                    온누리마켓
-                </h1>
-            </a>
+            class="bg-primary text-on-primary text-center py-2 px-4 flex items-center justify-center gap-4 text-[11px] tracking-widest uppercase">
+            <span>농할30+5% 이중 할인</span>
+            <span class="opacity-40">·</span>
+            <span>신규 가입 쿠폰 증정</span>
+            <span class="opacity-40">·</span>
+            <a href="#" class="underline hover:no-underline transition-all">고객센터 070-4138-4036</a>
+        </div>
 
-            <!-- 검색창 (절대 중앙 정렬) -->
-            <div class="absolute left-1/2 -translate-x-1/2 w-full max-w-sm md:max-w-md px-4">
-                <div class="relative flex items-center">
-                    <span class="material-symbols-outlined text-secondary absolute left-3 pointer-events-none"
-                        style="font-size:20px">search</span>
-                    <input type="search" placeholder="상품명, 브랜드, 카테고리 검색"
-                        class="w-full pl-10 pr-4 py-2 bg-surface-container rounded-full border border-outline-variant text-[14px] text-on-surface placeholder:text-secondary outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" />
+        <!-- TopAppBar -->
+        <header id="main-header" class="w-full bg-surface/90 backdrop-blur-md transition-all duration-300 ease-in-out">
+            <div
+                class="relative flex items-center px-margin-mobile md:px-margin-desktop h-16 w-full max-w-container-max mx-auto">
+                <!-- 로고 (좌측 고정) -->
+                <a href="#" class="flex items-center gap-2 shrink-0 cursor-pointer select-none z-10">
+                    <img src="onnuri.png" alt="온누리마켓 로고" class="h-12 w-auto" />
+                    <h1 class="font-headline-md text-[24px] tracking-[0.15em] font-bold text-primary">
+                        온누리마켓
+                    </h1>
+                </a>
+
+                <!-- 검색창 (절대 중앙 정렬) -->
+                <div class="absolute left-1/2 -translate-x-1/2 w-full max-w-sm md:max-w-md px-4">
+                    <div class="relative flex items-center">
+                        <input type="search" placeholder="상품명, 브랜드, 카테고리 검색"
+                            class="w-full pl-4 pr-10 py-2 bg-surface-container rounded-full border border-outline-variant text-[14px] text-on-surface placeholder:text-secondary outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" />
+                        <span class="material-symbols-outlined text-secondary absolute right-3 pointer-events-none"
+                            style="font-size:20px">search</span>
+                    </div>
+                </div>
+
+                <!-- 우측 액션 버튼 (우측 고정) -->
+                <div class="flex items-center gap-3 shrink-0 ml-auto z-10">
+                    <button class="relative hover:opacity-70 transition-opacity duration-300" aria-label="Cart">
+                        <span class="material-symbols-outlined text-primary">shopping_bag</span>
+                        <span
+                            class="absolute -top-1 -right-1 bg-primary text-on-primary text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold">3</span>
+                    </button>
+                    <button
+                        class="hidden md:flex items-center gap-1 hover:opacity-70 transition-opacity duration-300 font-label-sm text-[14px] text-secondary"
+                        aria-label="Login">
+                        <span class="material-symbols-outlined text-secondary" style="font-size:20px">person</span>
+                        로그인
+                    </button>
                 </div>
             </div>
 
-            <!-- 우측 액션 버튼 (우측 고정) -->
-            <div class="flex items-center gap-3 shrink-0 ml-auto z-10">
-                <button class="hidden md:block hover:opacity-70 transition-opacity duration-300" aria-label="Wishlist">
-                    <span class="material-symbols-outlined text-primary">favorite</span>
-                </button>
-                <button class="relative hover:opacity-70 transition-opacity duration-300" aria-label="Cart">
-                    <span class="material-symbols-outlined text-primary">shopping_bag</span>
-                    <span
-                        class="absolute -top-1 -right-1 bg-primary text-on-primary text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold">3</span>
-                </button>
-                <button
-                    class="hidden md:flex items-center gap-1 hover:opacity-70 transition-opacity duration-300 font-label-sm text-[14px] text-secondary"
-                    aria-label="Login">
-                    <span class="material-symbols-outlined text-secondary" style="font-size:20px">person</span>
-                    로그인
-                </button>
+            <!-- Category Tab Navigation -->
+            <div style="border-bottom:0.5px solid var(--md-sys-color-outline-variant, #e3e2e2)">
+                <div
+                    class="flex items-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-x-auto invisible-scroll gap-6">
+                    <button
+                        class="category-tab active shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-primary transition-colors">농할특가</button>
+                    <button
+                        class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">베스트</button>
+                    <button
+                        class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">축산</button>
+                    <button
+                        class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">채소</button>
+                    <button
+                        class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">과일</button>
+                    <button
+                        class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">수산</button>
+                    <button
+                        class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">가공식품</button>
+                    <button
+                        class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-error hover:opacity-70 transition-opacity flex items-center gap-1">
+                        딱7일특가
+                        <span class="badge bg-error text-on-error font-bold">-74%</span>
+                    </button>
+                </div>
             </div>
-        </div>
-
-        <!-- Category Tab Navigation -->
-        <div class="border-b border-outline-variant">
-            <div
-                class="flex items-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-x-auto invisible-scroll gap-6">
-                <button
-                    class="category-tab active shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-primary transition-colors">농할특가</button>
-                <button
-                    class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">베스트</button>
-                <button
-                    class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">축산</button>
-                <button
-                    class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">채소</button>
-                <button
-                    class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">과일</button>
-                <button
-                    class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">수산</button>
-                <button
-                    class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-secondary hover:text-primary transition-colors">가공식품</button>
-                <button
-                    class="category-tab shrink-0 py-3 font-label-sm text-label-sm uppercase tracking-widest text-error hover:opacity-70 transition-opacity flex items-center gap-1">
-                    딱7일특가
-                    <span class="badge bg-error text-on-error font-bold">-74%</span>
-                </button>
-            </div>
-        </div>
-    </header>
+        </header>
+    </div><!-- /site-header-wrap -->
 
     <main class="pb-24 md:pb-0">
 
@@ -328,16 +328,21 @@
         <section class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <div class="relative h-[60vh] overflow-hidden" id="hero-carousel">
                 <!-- Slides wrapper -->
-                <div class="flex h-full transition-transform duration-700 ease-in-out" id="hero-slides" style="width:300%">
+                <div class="flex h-full transition-transform duration-700 ease-in-out" id="hero-slides"
+                    style="width:300%">
 
                     <!-- Slide 1: 이미지 배너 -->
                     <div class="relative h-full flex-shrink-0" style="width:33.3333%">
                         <div class="absolute inset-0 bg-stone-800"></div>
-                        <div class="absolute inset-0 bg-cover bg-center md:hidden" style="background-image: url('./farm_hero_mobile.webp');"></div>
-                        <div class="absolute inset-0 bg-cover bg-center hidden md:block" style="background-image: url('./farm_hero_web.webp');"></div>
+                        <div class="absolute inset-0 bg-cover bg-center md:hidden"
+                            style="background-image: url('./farm_hero_mobile.webp');"></div>
+                        <div class="absolute inset-0 bg-cover bg-center hidden md:block"
+                            style="background-image: url('./farm_hero_web.webp');"></div>
                         <div class="absolute inset-0 hero-gradient"></div>
-                        <div class="absolute bottom-16 md:bottom-[60px] left-[20px] md:left-[60px] text-on-primary max-w-2xl">
-                            <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] mb-3 opacity-80">2026 여름 농할 특가전</p>
+                        <div
+                            class="absolute bottom-16 md:bottom-[60px] left-[20px] md:left-[60px] text-on-primary max-w-2xl">
+                            <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] mb-3 opacity-80">2026 여름 농할
+                                특가전</p>
                             <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-tight mb-6">
                                 신선한 자연,<br />건강한 밥상.
                             </h2>
@@ -345,17 +350,26 @@
                                 농할 30%에 추가 5% 이중 할인까지. 산지 직송 신선 식품을 온누리마켓에서 지금 바로 만나보세요.
                             </p>
                             <div class="flex items-center gap-4">
-                                <button class="bg-on-primary text-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all hover:bg-primary hover:text-on-primary hover:border hover:border-on-primary active:scale-95">지금 쇼핑하기</button>
-                                <button class="border border-on-primary text-on-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all hover:bg-on-primary hover:text-primary active:scale-95">농할 혜택 보기</button>
+                                <button
+                                    class="bg-on-primary text-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all hover:bg-primary hover:text-on-primary hover:border hover:border-on-primary active:scale-95">지금
+                                    쇼핑하기</button>
+                                <button
+                                    class="border border-on-primary text-on-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all hover:bg-on-primary hover:text-primary active:scale-95">농할
+                                    혜택 보기</button>
                             </div>
                         </div>
                     </div>
 
                     <!-- Slide 2: 농할 특가 하이라이트 -->
-                    <div class="relative h-full flex-shrink-0" style="width:33.3333%;background:linear-gradient(135deg,#1a3a2e 0%,#2d6b4f 60%,#3d8a65 100%)">
-                        <div class="absolute inset-0" style="background:radial-gradient(ellipse at 70% 50%, rgba(84,189,132,0.25) 0%, transparent 65%)"></div>
-                        <div class="absolute bottom-16 md:bottom-[60px] left-[20px] md:left-[60px] text-white max-w-2xl">
-                            <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] mb-3" style="color:rgba(255,255,255,0.7)">2026 농할 특가 하이라이트</p>
+                    <div class="relative h-full flex-shrink-0"
+                        style="width:33.3333%;background:linear-gradient(135deg,#1a3a2e 0%,#2d6b4f 60%,#3d8a65 100%)">
+                        <div class="absolute inset-0"
+                            style="background:radial-gradient(ellipse at 70% 50%, rgba(84,189,132,0.25) 0%, transparent 65%)">
+                        </div>
+                        <div
+                            class="absolute bottom-16 md:bottom-[60px] left-[20px] md:left-[60px] text-white max-w-2xl">
+                            <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] mb-3"
+                                style="color:rgba(255,255,255,0.7)">2026 농할 특가 하이라이트</p>
                             <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-tight mb-6">
                                 산지에서 바로,<br />온누리 농할 컬렉션.
                             </h2>
@@ -363,17 +377,26 @@
                                 농가와 직거래, 중간 유통 없이 신선하게. 농할 이중 할인으로 더 저렴하게 만나보세요.
                             </p>
                             <div class="flex items-center gap-4">
-                                <button class="h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95" style="background:#54BD84;color:#fff">농할 특가 보기</button>
-                                <button class="border h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95" style="border-color:rgba(255,255,255,0.5);color:rgba(255,255,255,0.85)">채소·과일</button>
+                                <button
+                                    class="h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95"
+                                    style="background:#54BD84;color:#fff">농할 특가 보기</button>
+                                <button
+                                    class="border h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95"
+                                    style="border-color:rgba(255,255,255,0.5);color:rgba(255,255,255,0.85)">채소·과일</button>
                             </div>
                         </div>
                     </div>
 
                     <!-- Slide 3: 쇼핑몰 입점 혜택 -->
-                    <div class="relative h-full flex-shrink-0" style="width:33.3333%;background:linear-gradient(135deg,#0f1f2e 0%,#1a3550 60%,#1e4a6e 100%)">
-                        <div class="absolute inset-0" style="background:radial-gradient(ellipse at 30% 60%, rgba(84,189,132,0.18) 0%, transparent 60%)"></div>
-                        <div class="absolute bottom-16 md:bottom-[60px] left-[20px] md:left-[60px] text-white max-w-2xl">
-                            <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] mb-3" style="color:rgba(255,255,255,0.7)">쇼핑몰 입점 혜택</p>
+                    <div class="relative h-full flex-shrink-0"
+                        style="width:33.3333%;background:linear-gradient(135deg,#0f1f2e 0%,#1a3550 60%,#1e4a6e 100%)">
+                        <div class="absolute inset-0"
+                            style="background:radial-gradient(ellipse at 30% 60%, rgba(84,189,132,0.18) 0%, transparent 60%)">
+                        </div>
+                        <div
+                            class="absolute bottom-16 md:bottom-[60px] left-[20px] md:left-[60px] text-white max-w-2xl">
+                            <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] mb-3"
+                                style="color:rgba(255,255,255,0.7)">쇼핑몰 입점 혜택</p>
                             <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-tight mb-6">
                                 최저 수수료,<br />온누리 마켓과 함께 해요.
                             </h2>
@@ -381,8 +404,13 @@
                                 합리적인 수수료와 전담 MD 지원으로 온누리마켓 입점의 문턱을 낮췄습니다.
                             </p>
                             <div class="flex items-center gap-4">
-                                <button class="h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95" style="background:#54BD84;color:#fff">입점 신청하기</button>
-                                <button class="border h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95" style="border-color:rgba(255,255,255,0.5);color:rgba(255,255,255,0.85)">혜택 알아보기</button>
+                                <button
+                                    class="h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95"
+                                    style="background:#54BD84;color:#fff">입점 신청하기</button>
+                                <button
+                                    class="border h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest transition-all active:scale-95"
+                                    style="border-color:rgba(255,255,255,0.5);color:rgba(255,255,255,0.85)">혜택
+                                    알아보기</button>
                             </div>
                         </div>
                     </div>
@@ -390,72 +418,81 @@
                 </div>
 
                 <!-- Prev / Next buttons -->
-                <button id="hero-prev" class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110" style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.25);border-radius:2px">
+                <button id="hero-prev"
+                    class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110"
+                    style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.25);border-radius:2px">
                     <span class="material-symbols-outlined text-white" style="font-size:22px">chevron_left</span>
                 </button>
-                <button id="hero-next" class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110" style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.25);border-radius:2px">
+                <button id="hero-next"
+                    class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110"
+                    style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.25);border-radius:2px">
                     <span class="material-symbols-outlined text-white" style="font-size:22px">chevron_right</span>
                 </button>
 
                 <!-- Dot indicators -->
                 <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="hero-dots">
-                    <button class="hero-dot w-6 h-1.5 transition-all duration-300" style="background:rgba(255,255,255,0.9)" data-index="0"></button>
-                    <button class="hero-dot w-2 h-1.5 transition-all duration-300" style="background:rgba(255,255,255,0.4)" data-index="1"></button>
-                    <button class="hero-dot w-2 h-1.5 transition-all duration-300" style="background:rgba(255,255,255,0.4)" data-index="2"></button>
+                    <button class="hero-dot w-6 h-1.5 transition-all duration-300"
+                        style="background:rgba(255,255,255,0.9)" data-index="0"></button>
+                    <button class="hero-dot w-2 h-1.5 transition-all duration-300"
+                        style="background:rgba(255,255,255,0.4)" data-index="1"></button>
+                    <button class="hero-dot w-2 h-1.5 transition-all duration-300"
+                        style="background:rgba(255,255,255,0.4)" data-index="2"></button>
                 </div>
 
                 <!-- Scroll indicator (slide 1 only) -->
-                <div class="absolute bottom-8 right-[20px] md:right-[60px] text-white flex flex-col items-center gap-2 opacity-60 pointer-events-none transition-opacity duration-500" id="hero-scroll-ind">
-                    <span class="font-label-sm text-label-sm uppercase tracking-widest" style="writing-mode:vertical-rl;letter-spacing:0.2em">Scroll</span>
+                <div class="absolute bottom-8 right-[20px] md:right-[60px] text-white flex flex-col items-center gap-2 opacity-60 pointer-events-none transition-opacity duration-500"
+                    id="hero-scroll-ind">
+                    <span class="font-label-sm text-label-sm uppercase tracking-widest"
+                        style="writing-mode:vertical-rl;letter-spacing:0.2em">Scroll</span>
                     <div class="w-px h-12 bg-white animate-pulse"></div>
                 </div>
             </div>
         </section>
         <script>
-        (function() {
-            var current = 0;
-            var total = 3;
-            var slides = document.getElementById('hero-slides');
-            var dots = document.querySelectorAll('.hero-dot');
-            var scrollInd = document.getElementById('hero-scroll-ind');
-            var timer;
+                (function () {
+                    var current = 0;
+                    var total = 3;
+                    var slides = document.getElementById('hero-slides');
+                    var dots = document.querySelectorAll('.hero-dot');
+                    var scrollInd = document.getElementById('hero-scroll-ind');
+                    var timer;
 
-            function goTo(index) {
-                current = index;
-                slides.style.transform = 'translateX(-' + (100 / total * current) + '%)';
-                dots.forEach(function(d, i) {
-                    if (i === current) {
-                        d.style.width = '24px';
-                        d.style.background = 'rgba(255,255,255,0.9)';
-                    } else {
-                        d.style.width = '8px';
-                        d.style.background = 'rgba(255,255,255,0.4)';
+                    function goTo(index) {
+                        current = index;
+                        slides.style.transform = 'translateX(-' + (100 / total * current) + '%)';
+                        dots.forEach(function (d, i) {
+                            if (i === current) {
+                                d.style.width = '24px';
+                                d.style.background = 'rgba(255,255,255,0.9)';
+                            } else {
+                                d.style.width = '8px';
+                                d.style.background = 'rgba(255,255,255,0.4)';
+                            }
+                        });
+                        if (scrollInd) scrollInd.style.opacity = current === 0 ? '0.6' : '0';
                     }
-                });
-                if (scrollInd) scrollInd.style.opacity = current === 0 ? '0.6' : '0';
-            }
 
-            function next() { goTo((current + 1) % total); }
+                    function next() { goTo((current + 1) % total); }
 
-            dots.forEach(function(d) {
-                d.addEventListener('click', function() {
-                    clearInterval(timer);
-                    goTo(parseInt(this.dataset.index));
+                    dots.forEach(function (d) {
+                        d.addEventListener('click', function () {
+                            clearInterval(timer);
+                            goTo(parseInt(this.dataset.index));
+                            timer = setInterval(next, 5000);
+                        });
+                    });
+
                     timer = setInterval(next, 5000);
-                });
-            });
-
-            timer = setInterval(next, 5000);
-        })();
+                })();
         </script>
 
-        <!-- 실시간 타임 특가 & 베스트 Section -->
+        <!-- [관리자 기능] 상품 진열 섹션 관리 · 1번 진열 (실시간 타임 특가 & 베스트) -->
         <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <div class="flex justify-between items-end mb-stack-lg">
                 <div>
-                    <h3 class="font-headline-md text-headline-md uppercase tracking-tight flex items-center gap-2">실시간
-                        타임 특가 & 베스트 <span
-                            class="bg-error text-on-error text-sm px-2 py-0.5 rounded-full font-bold animate-pulse">02:15:33</span>
+                    <p class="text-xs font-mono bg-blue-100 text-blue-700 inline-block px-2 py-0.5 rounded mb-1">상품 진열 섹션 관리 · 1번 진열</p>
+                    <h3 class="font-headline-md text-headline-md uppercase tracking-tight">실시간
+                        타임 특가 & 베스트
                     </h3>
                     <p class="text-secondary font-body-md mt-1">마감 02:15:33 남음! 놓치면 후회하는 온누리 특가</p>
                 </div>
@@ -469,17 +506,9 @@
                         <img alt="마장동 투쁠 1++ 한우 구이용"
                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             src="https://nurimarket.co.kr/data/item/1748838404/thumb-7Jqw66mU7KKF7Yq56rCA_350x350.jpg" />
-                        <button
-                            class="absolute top-3 right-3 text-primary bg-surface/80 rounded-full w-8 h-8 flex items-center justify-center hover:bg-surface transition-colors">
-                            <span class="material-symbols-outlined" style="font-size:18px">favorite</span>
-                        </button>
                         <div class="absolute top-3 left-3 flex flex-col gap-1">
                             <span class="badge bg-primary text-on-primary font-bold uppercase tracking-widest">축산</span>
                             <span class="badge bg-error text-on-error font-bold">28%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">Meat</p>
@@ -501,17 +530,9 @@
                         <img alt="고당도 하우스 수박"
                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             src="https://nurimarket.co.kr/data/item/1750385127/thumb-7KCc66qp7J2E7J6F66Cl7ZW07KO87IS47JqU.4_350x350.png" />
-                        <button
-                            class="absolute top-3 right-3 text-primary bg-surface/80 rounded-full w-8 h-8 flex items-center justify-center hover:bg-surface transition-colors">
-                            <span class="material-symbols-outlined" style="font-size:18px">favorite</span>
-                        </button>
                         <div class="absolute top-3 left-3 flex flex-col gap-1">
                             <span class="badge bg-primary text-on-primary font-bold uppercase tracking-widest">과일</span>
                             <span class="badge bg-error text-on-error font-bold">52%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">Fruit</p>
@@ -533,17 +554,9 @@
                         <img alt="농협 샐러드용 채소 믹스"
                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             src="https://nurimarket.co.kr/data/item/1750657091/thumb-64aN7ZiR7IOQ65s65Oc7LGE7IaM_66mU7J247I2464Sk7J28_350x350.jpg" />
-                        <button
-                            class="absolute top-3 right-3 text-primary bg-surface/80 rounded-full w-8 h-8 flex items-center justify-center hover:bg-surface transition-colors">
-                            <span class="material-symbols-outlined" style="font-size:18px">favorite</span>
-                        </button>
                         <div class="absolute top-3 left-3 flex flex-col gap-1">
                             <span class="badge bg-primary text-on-primary font-bold uppercase tracking-widest">채소</span>
                             <span class="badge bg-error text-on-error font-bold">41%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">Vegetable</p>
@@ -565,17 +578,9 @@
                         <img alt="안동간고등어 순살"
                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             src="https://nurimarket.co.kr/data/item/1763997843/thumb-main_350x350.jpg" />
-                        <button
-                            class="absolute top-3 right-3 text-primary bg-surface/80 rounded-full w-8 h-8 flex items-center justify-center hover:bg-surface transition-colors">
-                            <span class="material-symbols-outlined" style="font-size:18px">favorite</span>
-                        </button>
                         <div class="absolute top-3 left-3 flex flex-col gap-1">
                             <span class="badge bg-primary text-on-primary font-bold uppercase tracking-widest">수산</span>
                             <span class="badge bg-error text-on-error font-bold">24%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">Seafood</p>
@@ -597,17 +602,9 @@
                         <img alt="고당도 부사 사과"
                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             src="https://nurimarket.co.kr/data/item/1750749177/thumb-4_350x350.png" />
-                        <button
-                            class="absolute top-3 right-3 text-primary bg-surface/80 rounded-full w-8 h-8 flex items-center justify-center hover:bg-surface transition-colors">
-                            <span class="material-symbols-outlined" style="font-size:18px">favorite</span>
-                        </button>
                         <div class="absolute top-3 left-3 flex flex-col gap-1">
                             <span class="badge bg-primary text-on-primary font-bold uppercase tracking-widest">과일</span>
                             <span class="badge bg-error text-on-error font-bold">67%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">Fruit</p>
@@ -625,7 +622,6 @@
 
             </div>
         </section>
-
 
         <!-- MD's Pick Section -->
         <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
@@ -683,226 +679,12 @@
             </div>
         </section>
 
-        <!-- Editorial / Campaign Section -->
-        <section class="mt-stack-xl relative py-stack-xl bg-surface-container-low overflow-hidden">
-            <div
-                class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid md:grid-cols-2 gap-stack-lg items-center">
-                <div class="order-2 md:order-1">
-                    <p class="font-label-sm text-label-sm uppercase tracking-[0.3em] text-secondary mb-4">2026 농할 특가
-                        하이라이트</p>
-                    <h2 class="font-display-lg text-display-lg-mobile md:text-[40px] leading-tight mb-6">
-                        산지에서 바로,<br />온누리 농할 컬렉션.
-                    </h2>
-                    <p class="font-body-lg text-secondary max-w-md mb-8">
-                        농가와 소비자를 직접 잇는 온누리마켓. 농할 30%에 추가 쿠폰 할인까지, 신선도와 가격 모두 타협하지 않는 식품을 지금 경험하세요.
-                    </p>
-                    <div class="flex items-center gap-4">
-                        <button
-                            class="bg-primary text-on-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest hover:opacity-80 active:scale-95 transition-all">
-                            농할 상품 보기
-                        </button>
-                        <button
-                            class="border border-primary text-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all">
-                            쿠폰 받기
-                        </button>
-                    </div>
-                </div>
-                <div class="order-1 md:order-2 aspect-[16/9] overflow-hidden">
-                    <img alt="소한마리 한판 모듬세트"
-                        class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                        src="https://nurimarket.co.kr/data/banners/13" />
-                </div>
-            </div>
-        </section>
-
-        <!-- Category Showcase (Bento Grid) -->
-        <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-            <div class="text-left mb-stack-lg">
-                <h3 class="font-headline-md text-headline-md uppercase tracking-tight">카테고리별 쇼핑</h3>
-                <p class="text-secondary font-body-md mt-1">원하는 카테고리에서 신선하고 건강한 식품을 찾아보세요</p>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-6 gap-gutter">
-
-                <!-- 딱7일 특가 (col 1-4, row 1-2) -->
-                <div class="col-span-2 md:col-span-4 md:row-span-2 bg-primary p-6 md:p-10 flex flex-col justify-between cursor-pointer group"
-                    style="min-height: 260px;">
-                    <div>
-                        <span
-                            class="badge bg-error text-on-error font-bold uppercase tracking-widest text-[11px]">SALE</span>
-                        <h4 class="font-headline-md text-[36px] md:text-[64px] text-on-primary mt-4 leading-none">
-                            최대<br />74% OFF</h4>
-                    </div>
-                    <div>
-                        <p class="font-label-sm text-on-primary opacity-60 mb-3">딱 7일 한정 특가</p>
-                        <span
-                            class="inline-flex items-center gap-1 font-label-sm text-label-sm uppercase tracking-widest text-on-primary underline group-hover:no-underline transition-all">
-                            지금 쇼핑하기 <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span>
-                        </span>
-                    </div>
-                </div>
-
-                <!-- 축산 (col 5-6, row 1) -->
-                <div class="col-span-1 md:col-span-2 group relative overflow-hidden bg-surface-container cursor-pointer"
-                    style="height: 260px;">
-                    <img alt="축산"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src="https://nurimarket.co.kr/data/item/1748847371/thumb-7IK86rK57IK001_350x350.jpg" />
-                    <div
-                        class="absolute inset-0 bg-black/30 group-hover:bg-black/45 transition-colors duration-300 flex flex-col justify-end p-5 text-on-primary">
-                        <h4 class="font-body-md font-semibold">축산</h4>
-                        <p class="font-label-sm opacity-70 mt-0.5">한우 · 한돈 · 계란 · 육회</p>
-                    </div>
-                </div>
-
-                <!-- 채소 (col 5-6, row 2) -->
-                <div class="col-span-1 md:col-span-2 group relative overflow-hidden bg-surface-container cursor-pointer"
-                    style="height: 260px;">
-                    <img alt="채소"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src="https://nurimarket.co.kr/data/item/1749081753/thumb-7I2464Sk7J281_350x350.jpg" />
-                    <div
-                        class="absolute inset-0 bg-black/30 group-hover:bg-black/45 transition-colors duration-300 flex flex-col justify-end p-5 text-on-primary">
-                        <h4 class="font-body-md font-semibold">채소</h4>
-                        <p class="font-label-sm opacity-70 mt-0.5">고구마 · 감자 · 당근 · 양파</p>
-                    </div>
-                </div>
-
-                <!-- 수산 (col 1-2, row 3) -->
-                <div class="col-span-1 md:col-span-2 group relative overflow-hidden bg-surface-container cursor-pointer"
-                    style="height: 260px;">
-                    <img alt="수산"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src="https://nurimarket.co.kr/data/item/1761214105/thumb-20240602_173639_350x350.jpg" />
-                    <div
-                        class="absolute inset-0 bg-black/30 group-hover:bg-black/45 transition-colors duration-300 flex flex-col justify-end p-5 text-on-primary">
-                        <h4 class="font-body-md font-semibold">수산</h4>
-                        <p class="font-label-sm opacity-70 mt-0.5">고등어 · 오징어 · 게 · 멸치</p>
-                    </div>
-                </div>
-
-                <!-- 과일 (col 3-4, row 3) -->
-                <div class="col-span-1 md:col-span-2 group relative overflow-hidden bg-surface-container cursor-pointer"
-                    style="height: 260px;">
-                    <img alt="과일"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src="https://nurimarket.co.kr/data/item/1748838111/thumb-7ISx7KO87LC47Jm4_64aN7ZiR7I2464Sk7J28_350x350.jpg" />
-                    <div
-                        class="absolute inset-0 bg-black/30 group-hover:bg-black/45 transition-colors duration-300 flex flex-col justify-end p-5 text-on-primary">
-                        <h4 class="font-body-md font-semibold">과일</h4>
-                        <p class="font-label-sm opacity-70 mt-0.5">사과 · 수박 · 참외 · 포도</p>
-                    </div>
-                </div>
-
-                <!-- 가공식품 (col 5-6, row 3) -->
-                <div class="col-span-2 md:col-span-2 group relative overflow-hidden bg-surface-container cursor-pointer"
-                    style="height: 260px;">
-                    <img alt="가공식품"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src="https://nurimarket.co.kr/data/item/1763429572/thumb-batch_collage_350x350.jpg" />
-                    <div
-                        class="absolute inset-0 bg-black/30 group-hover:bg-black/45 transition-colors duration-300 flex flex-col justify-end p-5 text-on-primary">
-                        <h4 class="font-body-md font-semibold">가공식품</h4>
-                        <p class="font-label-sm opacity-70 mt-0.5">반찬 · 밀키트 · 간편식</p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Real-time Ranking & Best Section -->
-        <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-            <h3 class="font-headline-md text-headline-md uppercase tracking-tight mb-stack-md">실시간 랭킹</h3>
-            <div class="grid md:grid-cols-2 gap-stack-lg">
-
-                <!-- 실시간 인기 랭킹 -->
-                <div class="bg-surface-container-low p-6">
-                    <ul class="space-y-2">
-                        <li class="flex items-center gap-4 pb-3 border-b border-outline-variant cursor-pointer group">
-                            <span class="font-bold text-primary text-xl w-8 shrink-0">01</span>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-body-md truncate group-hover:underline">국내산 1등급 소한마리 한판 모듬세트</p>
-                                <p class="font-label-sm text-secondary mt-0.5">37,800원 <span
-                                        class="text-error ml-1">12%</span></p>
-                            </div>
-                            <span class="material-symbols-outlined text-secondary shrink-0"
-                                style="font-size:18px">trending_up</span>
-                        </li>
-                        <li class="flex items-center gap-4 pb-3 border-b border-outline-variant cursor-pointer group">
-                            <span class="font-bold text-primary opacity-60 text-xl w-8 shrink-0">02</span>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-body-md truncate group-hover:underline">난각번호 1번 무항생제 계란 유정란</p>
-                                <p class="font-label-sm text-secondary mt-0.5">13,900원 <span
-                                        class="text-error ml-1">58%</span></p>
-                            </div>
-                            <span class="material-symbols-outlined text-secondary shrink-0"
-                                style="font-size:18px">trending_up</span>
-                        </li>
-                        <li class="flex items-center gap-4 pb-3 border-b border-outline-variant cursor-pointer group">
-                            <span class="font-bold text-primary opacity-40 text-xl w-8 shrink-0">03</span>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-body-md truncate group-hover:underline">[단독특가] 성주월항농협 꿀참외 특 2~10kg</p>
-                                <p class="font-label-sm text-secondary mt-0.5">10,100원 <span
-                                        class="text-error ml-1">74%</span></p>
-                            </div>
-                            <span class="material-symbols-outlined text-secondary shrink-0"
-                                style="font-size:18px">trending_up</span>
-                        </li>
-                        <li class="flex items-center gap-4 pb-3 border-b border-outline-variant cursor-pointer group">
-                            <span class="font-bold text-primary opacity-30 text-xl w-8 shrink-0">04</span>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-body-md truncate group-hover:underline">구룡포 해풍건조 원양산 반건조오징어</p>
-                                <p class="font-label-sm text-secondary mt-0.5">12,900원 <span
-                                        class="text-error ml-1">56%</span></p>
-                            </div>
-                            <span class="material-symbols-outlined text-secondary shrink-0"
-                                style="font-size:18px">trending_flat</span>
-                        </li>
-                        <li class="flex items-center gap-4 cursor-pointer group">
-                            <span class="font-bold text-primary opacity-20 text-xl w-8 shrink-0">05</span>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-body-md truncate group-hover:underline">13~15brix 고당도 부사 사과</p>
-                                <p class="font-label-sm text-secondary mt-0.5">12,900원 <span
-                                        class="text-error ml-1">67%</span></p>
-                            </div>
-                            <span class="material-symbols-outlined text-secondary shrink-0"
-                                style="font-size:18px">trending_down</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- 베스트 상품 이미지 -->
-                <div class="grid grid-cols-2 gap-gutter">
-                    <div class="group cursor-pointer">
-                        <div class="aspect-square overflow-hidden bg-surface-container mb-3">
-                            <img alt="소한마리 한판 모듬세트"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                src="https://nurimarket.co.kr/data/item/1743882201/thumb-SUM1_350x350.png" />
-                        </div>
-                        <p class="font-label-sm text-label-sm text-secondary mb-1">Best Seller</p>
-                        <h4 class="font-body-md line-clamp-1">소한마리 한판 모듬세트</h4>
-                        <p class="font-headline-md text-[15px] mt-1">37,800원</p>
-                    </div>
-                    <div class="group cursor-pointer">
-                        <div class="aspect-square overflow-hidden bg-surface-container mb-3">
-                            <img alt="무항생제 계란 유정란"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                src="https://nurimarket.co.kr/data/item/1743186881/thumb-7Jyg7KCV656A_7I2464Sk7J28_100010001_350x350.jpg" />
-                        </div>
-                        <p class="font-label-sm text-label-sm text-secondary mb-1">Best Seller</p>
-                        <h4 class="font-body-md line-clamp-1">난각1번 무항생제 유정란</h4>
-                        <p class="font-headline-md text-[15px] mt-1">13,900원</p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 딱7일 특가 섹션 -->
+        <!-- 오늘 만 세일 -->
         <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <div class="flex justify-between items-end mb-stack-lg">
                 <div>
-                    <h3 class="font-headline-md text-headline-md uppercase tracking-tight">딱 7일 특가</h3>
-                    <p class="text-secondary font-body-md mt-1">기간 한정, 놓치면 후회하는 특가 상품</p>
+                    <h3 class="font-headline-md text-headline-md uppercase tracking-tight">오늘만 세일</h3>
+                    <p class="text-secondary font-body-md mt-1">하루 한번, 오늘 특가를 만나 보세요</p>
                 </div>
                 <a href="#" class="font-label-sm text-label-sm underline hover:no-underline transition-all">전체보기</a>
             </div>
@@ -916,10 +698,6 @@
                             src="https://nurimarket.co.kr/data/item/1712296007/thumb-7ZmV64yA7J206647KeA_350x350.jpg" />
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">49%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">특가</p>
@@ -944,10 +722,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">32%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">특가</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">(농할) 국산 창녕 의성 깐마늘</h4>
@@ -970,10 +744,6 @@
                             src="https://nurimarket.co.kr/data/item/1761202845/thumb-main_350x350.jpg" />
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">34%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">특가</p>
@@ -998,10 +768,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">33%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">특가</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">[맘스케이크] 청주오믈렛</h4>
@@ -1025,9 +791,167 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">41%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
+                    </div>
+                    <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">특가</p>
+                    <h4 class="font-body-md text-on-surface line-clamp-1">(농할) 2025 햇고구마 해남 황토 꿀고구마</h4>
+                    <p class="text-primary font-label-sm text-[11px] font-bold mt-1 tracking-tight">[온누리 결제 시 10% SAVE]
+                    </p>
+                    <div class="flex flex-col mt-0.5">
+                        <span class="text-secondary line-through font-label-sm" style="font-size:11px">18,500원</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-error font-bold">41%</span>
+                            <p class="font-headline-md text-[18px] font-bold">10,900원</p>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Editorial / Campaign Section -->
+        <section class="mt-stack-xl relative py-stack-xl bg-surface-container-low overflow-hidden">
+            <div
+                class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid md:grid-cols-2 gap-stack-lg items-center">
+                <div class="order-2 md:order-1">
+                    <p class="font-label-sm text-label-sm uppercase tracking-[0.3em] text-secondary mb-4">2026 농할 특가
+                        하이라이트</p>
+                    <h2 class="font-display-lg text-display-lg-mobile md:text-[40px] leading-tight mb-6">
+                        산지에서 바로,<br />온누리 농할 컬렉션.
+                    </h2>
+                    <p class="font-body-lg text-secondary max-w-md mb-8">
+                        농가와 소비자를 직접 잇는 온누리마켓. 농할 30%에 추가 쿠폰 할인까지, 신선도와 가격 모두 타협하지 않는 식품을 지금 경험하세요.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <button
+                            class="bg-primary text-on-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest hover:opacity-80 active:scale-95 transition-all">
+                            농할 상품 보기
+                        </button>
+                        <button
+                            class="border border-primary text-primary h-[52px] px-8 font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all">
+                            쿠폰 받기
+                        </button>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 overflow-hidden">
+                    <img alt="소한마리 한판 모듬세트" class="object-cover transition-transform duration-700 hover:scale-105"
+                        style="width:640px;height:360px;max-width:100%;"
+                        src="https://nurimarket.co.kr/data/banners/13" />
+                </div>
+            </div>
+        </section>
+
+        <!-- [관리자 기능] 상품 진열 섹션 관리 · 2번 진열 (딱7일특가) -->
+        <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+            <div class="flex justify-between items-end mb-stack-lg">
+                <div>
+                    <p class="text-xs font-mono bg-blue-100 text-blue-700 inline-block px-2 py-0.5 rounded mb-1">상품 진열 섹션 관리 · 2번 진열</p>
+                    <h3 class="font-headline-md text-headline-md uppercase tracking-tight">딱 7일 특가</h3>
+                    <p class="text-secondary font-body-md mt-1">기간 한정, 놓치면 후회하는 특가 상품</p>
+                </div>
+                <a href="#" class="font-label-sm text-label-sm underline hover:no-underline transition-all">전체보기</a>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-gutter">
+
+                <!-- 특가1 : 수미감자 -->
+                <a href="product-detail.html?id=potato" class="group cursor-pointer block">
+                    <div class="relative aspect-square overflow-hidden bg-surface-container mb-3">
+                        <img alt="국내산 수미감자"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            src="https://nurimarket.co.kr/data/item/1712296007/thumb-7ZmV64yA7J206647KeA_350x350.jpg" />
+                        <div class="absolute top-3 left-3">
+                            <span class="badge bg-error text-on-error font-bold">49%</span>
+                        </div>
+                    </div>
+                    <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">특가</p>
+                    <h4 class="font-body-md text-on-surface line-clamp-1">(농할) 26년 햇감자 포슬포슬 수미감자</h4>
+                    <p class="text-primary font-label-sm text-[11px] font-bold mt-1 tracking-tight">[온누리 결제 시 10% SAVE]
+                    </p>
+                    <div class="flex flex-col mt-0.5">
+                        <span class="text-secondary line-through font-label-sm" style="font-size:11px">12,000원</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-error font-bold">49%</span>
+                            <p class="font-headline-md text-[18px] font-bold">6,100원</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 특가2 : 깐마늘 -->
+                <a href="product-detail.html?id=garlic" class="group cursor-pointer block">
+                    <div class="relative aspect-square overflow-hidden bg-surface-container mb-3">
+                        <img alt="국산 창녕 의성 깐마늘"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            src="https://nurimarket.co.kr/data/item/1743026257/thumb-7I2464Sk7J28_6rmQ66eI64qY21_350x350.png" />
+                        <div class="absolute top-3 left-3">
+                            <span class="badge bg-error text-on-error font-bold">32%</span>
+                        </div>
+                    </div>
+                    <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">특가</p>
+                    <h4 class="font-body-md text-on-surface line-clamp-1">(농할) 국산 창녕 의성 깐마늘</h4>
+                    <p class="text-primary font-label-sm text-[11px] font-bold mt-1 tracking-tight">[온누리 결제 시 10% SAVE]
+                    </p>
+                    <div class="flex flex-col mt-0.5">
+                        <span class="text-secondary line-through font-label-sm" style="font-size:11px">18,500원</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-error font-bold">32%</span>
+                            <p class="font-headline-md text-[18px] font-bold">12,500원</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 특가3 : 파프리카 -->
+                <a href="product-detail.html?id=paprika" class="group cursor-pointer block">
+                    <div class="relative aspect-square overflow-hidden bg-surface-container mb-3">
+                        <img alt="못난이 파프리카"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            src="https://nurimarket.co.kr/data/item/1761202845/thumb-main_350x350.jpg" />
+                        <div class="absolute top-3 left-3">
+                            <span class="badge bg-error text-on-error font-bold">34%</span>
+                        </div>
+                    </div>
+                    <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">특가</p>
+                    <h4 class="font-body-md text-on-surface line-clamp-1">[가락시장] 못난이 파프리카</h4>
+                    <p class="text-primary font-label-sm text-[11px] font-bold mt-1 tracking-tight">[온누리 결제 시 10% SAVE]
+                    </p>
+                    <div class="flex flex-col mt-0.5">
+                        <span class="text-secondary line-through font-label-sm" style="font-size:11px">13,500원</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-error font-bold">34%</span>
+                            <p class="font-headline-md text-[18px] font-bold">8,900원</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 특가4 : 청주오믈렛 -->
+                <a href="product-detail.html?id=omelette" class="group cursor-pointer block">
+                    <div class="relative aspect-square overflow-hidden bg-surface-container mb-3">
+                        <img alt="청주오믈렛"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            src="https://nurimarket.co.kr/data/item/1763429572/thumb-batch_collage_350x350.jpg" />
+                        <div class="absolute top-3 left-3">
+                            <span class="badge bg-error text-on-error font-bold">33%</span>
+                        </div>
+                    </div>
+                    <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">특가</p>
+                    <h4 class="font-body-md text-on-surface line-clamp-1">[맘스케이크] 청주오믈렛</h4>
+                    <p class="text-primary font-label-sm text-[11px] font-bold mt-1 tracking-tight">[온누리 결제 시 10% SAVE]
+                    </p>
+                    <div class="flex flex-col mt-0.5">
+                        <span class="text-secondary line-through font-label-sm" style="font-size:11px">15,900원</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-error font-bold">33%</span>
+                            <p class="font-headline-md text-[18px] font-bold">10,500원</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 특가5 : 해남 황토 꿀고구마 -->
+                <a href="product-detail.html?id=sweetpotato" class="group cursor-pointer block">
+                    <div class="relative aspect-square overflow-hidden bg-surface-container mb-3">
+                        <img alt="해남 황토 꿀고구마"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            src="https://nurimarket.co.kr/data/item/1756966056/thumb-SORIPAM1_1T_350x350.jpg" />
+                        <div class="absolute top-3 left-3">
+                            <span class="badge bg-error text-on-error font-bold">41%</span>
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">특가</p>
@@ -1054,10 +978,11 @@
             </a>
         </div>
 
-        <!-- 채소 -->
+        <!-- [관리자 기능] 상품 진열 섹션 관리 · 3번 진열 (채소) -->
         <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <div class="flex justify-between items-end mb-stack-lg">
                 <div>
+                    <p class="text-xs font-mono bg-blue-100 text-blue-700 inline-block px-2 py-0.5 rounded mb-1">상품 진열 섹션 관리 · 3번 진열</p>
                     <h3 class="font-headline-md text-headline-md uppercase tracking-tight">채소</h3>
                 </div>
                 <a href="#" class="font-label-sm text-label-sm underline hover:no-underline transition-all">전체보기</a>
@@ -1072,10 +997,6 @@
                             src="https://nurimarket.co.kr/data/item/1750657091/thumb-64aN7ZiR7IOQ65s65Oc7LGE7IaM_66mU7J247I2464Sk7J28_350x350.jpg" />
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">41%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">채소</p>
@@ -1100,10 +1021,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">51%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">채소</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">(농할) 김의준고구마 무농약 꿀고구마</h4>
@@ -1126,10 +1043,6 @@
                             src="https://nurimarket.co.kr/data/item/1756966056/thumb-SORIPAM1_1T_350x350.jpg" />
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">41%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">채소</p>
@@ -1154,10 +1067,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">43%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">채소</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">(농할) 26년 햇당근 국내산 경남</h4>
@@ -1181,10 +1090,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">30%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">채소</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">(농할) GAP인증 샐러드 쌈채소 믹스</h4>
@@ -1202,10 +1107,11 @@
             </div>
         </section>
 
-        <!-- 과일 -->
+        <!-- [관리자 기능] 상품 진열 섹션 관리 · 4번 진열 (과일) -->
         <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <div class="flex justify-between items-end mb-stack-lg">
                 <div>
+                    <p class="text-xs font-mono bg-blue-100 text-blue-700 inline-block px-2 py-0.5 rounded mb-1">상품 진열 섹션 관리 · 4번 진열</p>
                     <h3 class="font-headline-md text-headline-md uppercase tracking-tight">과일</h3>
                 </div>
                 <a href="#" class="font-label-sm text-label-sm underline hover:no-underline transition-all">전체보기</a>
@@ -1220,10 +1126,6 @@
                             src="https://nurimarket.co.kr/data/item/1757567490/thumb-main_350x350.jpg" />
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">34%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">과일</p>
@@ -1248,10 +1150,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">34%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">과일</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">(농할) [향기담은] 경북 시나노골드 사과</h4>
@@ -1274,10 +1172,6 @@
                             src="https://nurimarket.co.kr/data/item/1750385127/thumb-7KCc66qp7J2E7J6F66Cl7ZW07KO87IS47JqU.4_350x350.png" />
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">52%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">과일</p>
@@ -1302,10 +1196,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">67%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">과일</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">(농할) 13-15brix 고당도 부사 사과</h4>
@@ -1329,10 +1219,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">33%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">과일</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">하우스 고당도 샤인머스켓 500g/1kg/2kg</h4>
@@ -1350,10 +1236,11 @@
             </div>
         </section>
 
-        <!-- 수산 -->
+        <!-- [관리자 기능] 상품 진열 섹션 관리 · 5번 진열 (수산) -->
         <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <div class="flex justify-between items-end mb-stack-lg">
                 <div>
+                    <p class="text-xs font-mono bg-blue-100 text-blue-700 inline-block px-2 py-0.5 rounded mb-1">상품 진열 섹션 관리 · 5번 진열</p>
                     <h3 class="font-headline-md text-headline-md uppercase tracking-tight">수산</h3>
                 </div>
                 <a href="#" class="font-label-sm text-label-sm underline hover:no-underline transition-all">전체보기</a>
@@ -1368,10 +1255,6 @@
                             src="https://nurimarket.co.kr/data/item/1763997843/thumb-main_350x350.jpg" />
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">24%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">수산</p>
@@ -1396,10 +1279,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">56%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">수산</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">구룡포 해풍건조 원양산 반건조오징어</h4>
@@ -1422,10 +1301,6 @@
                             src="https://nurimarket.co.kr/data/item/1761225665/thumb-7KCc66qp7J2E7J6F66Cl7ZW07KO87IS47JqU.3_350x350.png" />
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">40%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">수산</p>
@@ -1450,10 +1325,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">25%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">수산</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">[삼해진미] 자연산 신선 통 오징어 260g x3팩</h4>
@@ -1477,10 +1348,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">42%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">수산</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">[말리죠] 국산멸치 400g 4종</h4>
@@ -1498,10 +1365,11 @@
             </div>
         </section>
 
-        <!-- 가공식품 -->
+        <!-- [관리자 기능] 상품 진열 섹션 관리 · 6번 진열 (가공식품) -->
         <section class="mt-stack-xl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <div class="flex justify-between items-end mb-stack-lg">
                 <div>
+                    <p class="text-xs font-mono bg-blue-100 text-blue-700 inline-block px-2 py-0.5 rounded mb-1">상품 진열 섹션 관리 · 6번 진열</p>
                     <h3 class="font-headline-md text-headline-md uppercase tracking-tight">가공식품</h3>
                 </div>
                 <a href="#" class="font-label-sm text-label-sm underline hover:no-underline transition-all">전체보기</a>
@@ -1516,10 +1384,6 @@
                             src="https://nurimarket.co.kr/data/item/1746765344/thumb-7Jew7IS47Jqw7JygA266m46reg7Jqw7Jyg7IS467iM656A7Iqk125mlx247J6F_350x350.jpg" />
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">27%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">가공식품</p>
@@ -1541,10 +1405,6 @@
                         <img alt="농심 신라면 X 5개"
                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             src="https://nurimarket.co.kr/data/item/1720659610/thumb-7I242_350x350.jpg" />
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">가공식품</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">[농심] 신라면 X 5개</h4>
@@ -1563,10 +1423,6 @@
                             src="https://nurimarket.co.kr/data/item/1712300032/thumb-7I2464Sk7J28_67Cw7LaU6rmA7LmY4_350x350.png" />
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">35%</span>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
                         </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">가공식품</p>
@@ -1591,10 +1447,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">34%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">가공식품</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">[동원] 라이트스탠다드 참치 85g x 14캔</h4>
@@ -1618,10 +1470,6 @@
                         <div class="absolute top-3 left-3">
                             <span class="badge bg-error text-on-error font-bold">19%</span>
                         </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-primary text-on-primary text-center py-2 font-label-sm text-label-sm uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            장바구니 담기
-                        </div>
                     </div>
                     <p class="font-label-sm text-label-sm text-secondary uppercase mb-1">가공식품</p>
                     <h4 class="font-body-md text-on-surface line-clamp-1">[연세우유] 일반 멸균우유 200ml x 24팩</h4>
@@ -1639,28 +1487,12 @@
             </div>
         </section>
 
-        <!-- 입점 마켓 Strip -->
-        <section class="mt-stack-xl mb-stack-xl px-margin-mobile md:px-margin-desktop overflow-hidden">
-            <div class="text-center mb-stack-lg">
-                <p class="font-label-sm text-label-sm uppercase tracking-[0.4em] text-secondary">입점 마켓 · 브랜드</p>
-            </div>
-            <div
-                class="flex md:justify-center items-center gap-stack-lg overflow-x-auto invisible-scroll py-4 grayscale opacity-40 hover:opacity-60 transition-opacity duration-500">
-                <span class="font-headline-md whitespace-nowrap text-xl">장위전통시장</span>
-                <span class="font-headline-md whitespace-nowrap text-xl">계양산</span>
-                <span class="font-headline-md whitespace-nowrap text-xl">가락시장</span>
-                <span class="font-headline-md whitespace-nowrap text-xl">우메종</span>
-                <span class="font-headline-md whitespace-nowrap text-xl">맘스케이크</span>
-                <span class="font-headline-md whitespace-nowrap text-xl">산들정</span>
-                <span class="font-headline-md whitespace-nowrap text-xl">동원</span>
-            </div>
-        </section>
 
     </main>
 
 
     <!-- Footer CTA Card -->
-    <section class="relative py-10 lg:py-14 overflow-hidden" style="background:#FF601C">
+    <section class="relative mt-stack-lg py-10 lg:py-14 overflow-hidden" style="background:#FF601C">
         <div class="absolute w-96 h-96 rounded-full top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
             style="background:radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)"></div>
         <div class="absolute w-72 h-72 rounded-full bottom-0 right-1/4 translate-x-1/2 translate-y-1/4 pointer-events-none"
@@ -1703,7 +1535,8 @@
                         상호명: (주)온채널 &nbsp;|&nbsp; 사업자등록번호: 201-86-37410 &nbsp;|&nbsp; 대표: 이상민 &nbsp;|&nbsp;
                         통신판매업신고번호: 제 2022서울강남-05251 호<br />
                         주소: 서울특별시 강남구 테헤란로79길 11, 4층·5층 일부 에이타워 (삼성동)<br />
-                        개인정보관리책임자: 김수현 &nbsp;|&nbsp; CS 대표 번호: 02)3473-1157 &nbsp;|&nbsp; 운영시간: 월–금 10:00–17:00 (점심 13:00–14:00)<br />
+                        개인정보관리책임자: 김수현 &nbsp;|&nbsp; CS 대표 번호: 02)3473-1157 &nbsp;|&nbsp; 운영시간: 월–금 10:00–17:00 (점심
+                        13:00–14:00)<br />
                         대표이메일: help@onch3.co.kr &nbsp;|&nbsp; 상품/입점문의: md@onch3.co.kr
                     </p>
                     <p class="font-label-sm text-label-sm text-secondary">
@@ -1714,24 +1547,37 @@
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-stack-md md:gap-stack-lg shrink-0">
                     <div class="flex flex-col gap-3">
                         <p class="font-label-sm text-label-sm font-bold uppercase mb-2">쇼핑</p>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">농할특가</a>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">축산</a>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">채소/과일</a>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">딱7일특가</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">농할특가</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">축산</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">채소/과일</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">딱7일특가</a>
                     </div>
                     <div class="flex flex-col gap-3">
                         <p class="font-label-sm text-label-sm font-bold uppercase mb-2">고객지원</p>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">1:1 문의</a>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">배송조회</a>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">교환/반품</a>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">FAQ</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">1:1
+                            문의</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">배송조회</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">교환/반품</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">FAQ</a>
                     </div>
                     <div class="flex flex-col gap-3">
                         <p class="font-label-sm text-label-sm font-bold uppercase mb-2">회사</p>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">회사소개</a>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">이용약관</a>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">개인정보처리방침</a>
-                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">입점문의</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">회사소개</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">이용약관</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">개인정보처리방침</a>
+                        <a href="#"
+                            class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">입점문의</a>
                     </div>
                 </div>
             </div>
@@ -1758,11 +1604,6 @@
         </button>
         <button
             class="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors scale-95 active:scale-100">
-            <span class="material-symbols-outlined">favorite</span>
-            <span class="font-label-sm text-label-sm mt-1">위시리스트</span>
-        </button>
-        <button
-            class="flex flex-col items-center justify-center text-secondary hover:text-primary transition-colors scale-95 active:scale-100">
             <span class="material-symbols-outlined">person</span>
             <span class="font-label-sm text-label-sm mt-1">마이</span>
         </button>
@@ -1770,6 +1611,15 @@
 
     <script>
         const header = document.getElementById('main-header');
+
+        const headerWrap = document.getElementById('site-header-wrap');
+        function updateFloatingTop() {
+            const h = headerWrap.getBoundingClientRect().height;
+            document.documentElement.style.setProperty('--floating-top', (h + 10) + 'px');
+        }
+        updateFloatingTop();
+        new ResizeObserver(updateFloatingTop).observe(headerWrap);
+
         window.addEventListener('scroll', () => {
             if (window.scrollY > 40) {
                 header.classList.add('shadow-sm');
@@ -1797,10 +1647,6 @@
                 <img id="fb-left-img" src="https://nurimarket.co.kr/data/banners/26" alt="KAF 온라인 도매시장 20% 할인"
                     onerror="this.style.display='none'" />
             </div>
-            <div class="fb-body" id="fb-left-body">
-                <p class="fb-tag" id="fb-left-tag">도매시장</p>
-                <p class="fb-title" id="fb-left-title">KAF 온라인 도매시장<br />20% 할인</p>
-            </div>
         </a>
         <div class="fb-dots" id="fb-left-dots">
             <span class="fb-dot active"></span>
@@ -1815,10 +1661,6 @@
             <div class="fb-img">
                 <img id="fb-right-img" src="https://nurimarket.co.kr/data/banners/39" alt="삼성전자 감사페스티벌"
                     onerror="this.style.display='none'" />
-            </div>
-            <div class="fb-body" id="fb-right-body">
-                <p class="fb-tag" id="fb-right-tag">이벤트</p>
-                <p class="fb-title" id="fb-right-title">삼성전자<br />감사 페스티벌</p>
             </div>
         </a>
         <div class="fb-dots" id="fb-right-dots">
@@ -1841,9 +1683,10 @@
                 { src: 'https://nurimarket.co.kr/data/banners/30', alt: '계양산 30% 할인', tag: '계양산', title: '계양산 입점마켓<br>30% 할인', href: '#' }
             ];
 
-            function initRoller(imgEl, bodyEl, tagEl, titleEl, cardEl, dotsEl, banners) {
+            function initRoller(imgEl, cardEl, dotsEl, banners) {
                 var idx = 0;
                 var dots = dotsEl.querySelectorAll('.fb-dot');
+                var timer;
 
                 function updateDots(i) {
                     dots.forEach(function (d, j) {
@@ -1851,44 +1694,50 @@
                     });
                 }
 
-                function roll() {
-                    idx = (idx + 1) % banners.length;
+                function goTo(i) {
+                    idx = i;
                     var b = banners[idx];
 
                     imgEl.style.opacity = '0';
-                    bodyEl.style.opacity = '0';
 
                     setTimeout(function () {
                         imgEl.src = b.src;
                         imgEl.alt = b.alt;
-                        imgEl.style.display = '';
-                        tagEl.textContent = b.tag;
-                        titleEl.innerHTML = b.title;
                         cardEl.href = b.href;
                         updateDots(idx);
-
                         imgEl.style.opacity = '1';
-                        bodyEl.style.opacity = '1';
                     }, 400);
                 }
 
-                setInterval(roll, 4000);
+                function roll() {
+                    goTo((idx + 1) % banners.length);
+                }
+
+                function resetTimer() {
+                    clearInterval(timer);
+                    timer = setInterval(roll, 4000);
+                }
+
+                dots.forEach(function (d, i) {
+                    d.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        goTo(i);
+                        resetTimer();
+                    });
+                });
+
+                resetTimer();
             }
 
             initRoller(
                 document.getElementById('fb-left-img'),
-                document.getElementById('fb-left-body'),
-                document.getElementById('fb-left-tag'),
-                document.getElementById('fb-left-title'),
                 document.getElementById('fb-left-card'),
                 document.getElementById('fb-left-dots'),
                 leftBanners
             );
             initRoller(
                 document.getElementById('fb-right-img'),
-                document.getElementById('fb-right-body'),
-                document.getElementById('fb-right-tag'),
-                document.getElementById('fb-right-title'),
                 document.getElementById('fb-right-card'),
                 document.getElementById('fb-right-dots'),
                 rightBanners
